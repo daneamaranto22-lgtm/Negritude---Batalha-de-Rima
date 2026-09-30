@@ -1,0 +1,1528 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0b10">
+  <title>Batalha de Rima: Voz, Cultura e Resistência</title>
+  <meta name="description" content="Linha do tempo interativa sobre a história das batalhas de rima no Brasil e o protagonismo da população negra nessa cultura. Projeto para o Dia Nacional de Zumbi e da Consciência Negra.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;700&family=Permanent+Marker&display=swap">
+  <style>
+/* Batalha de Rima: Voz, Cultura e Resistência
+   Tema escuro pensado para a identidade do projeto (cultura de rua, sem estereótipos). */
+
+@property --accent { syntax: "<color>"; inherits: true; initial-value: #ffc233; }
+
+:root {
+  color-scheme: dark;
+  --bg: #0b0b10;
+  --bg-2: #101018;
+  --surface: #171722;
+  --surface-2: #20202e;
+  --ink: #f4f1ea;
+  --ink-dim: #b9b5c2;
+  --line: #2e2e40;
+  --accent: #ffc233;
+
+  --c-protagonismo: #ffc233;
+  --c-resistencia: #ff6b6f;
+  --c-representatividade: #2dd4bf;
+  --c-valorizacao: #b794ff;
+
+  --font-display: "Anton", Impact, "Haettenschweiler", "Arial Narrow Bold", sans-serif;
+  --font-body: "Archivo", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-tag: "Permanent Marker", "Marker Felt", "Segoe Print", "Bradley Hand", cursive;
+
+  --radius: 6px;
+  --wrap: 1120px;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 64px); scroll-behavior: smooth; }
+*, *::before, *::after { box-sizing: inherit; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+/* textura discreta de ruído */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .06;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main, header, footer { position: relative; z-index: 1; }
+
+img, svg { max-width: 100%; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+h1, h2, h3, h4 { margin: 0 0 .5em; line-height: 1.1; font-weight: 400; }
+h2 { font-family: var(--font-display); font-size: clamp(2.1rem, 6vw, 3.6rem); letter-spacing: .01em; }
+h3 { font-family: var(--font-body); font-weight: 700; font-size: 1.25rem; line-height: 1.25; }
+h4 { font-family: var(--font-body); font-weight: 700; font-size: .95rem; color: var(--ink-dim); margin-bottom: .6rem; }
+p { margin: 0 0 1em; max-width: 68ch; }
+
+.wrap { width: min(100% - 2rem, var(--wrap)); margin-inline: auto; }
+.narrow { max-width: 760px; }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.skip { position: absolute; left: .5rem; top: -4rem; z-index: 50; background: var(--accent); color: #000; padding: .6rem 1rem; border-radius: var(--radius); font-weight: 700; }
+.skip:focus { top: calc(env(safe-area-inset-top, 0px) + .5rem); }
+
+.section { padding: clamp(3rem, 9vw, 6rem) 0; border-top: 1px solid var(--line); }
+.lead { font-size: 1.15rem; color: var(--ink-dim); max-width: 70ch; }
+.sub-h { margin-top: 2.5rem; }
+
+/* ---------- Botões ---------- */
+.btn {
+  font: inherit; font-weight: 700; font-size: 1rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 46px; padding: .6rem 1.2rem;
+  border-radius: var(--radius); border: 2px solid var(--accent);
+  background: transparent; color: var(--ink); cursor: pointer; text-decoration: none;
+  transition: background-color .18s, color .18s, transform .18s;
+}
+.btn:hover { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+.btn:active { transform: translateY(1px); }
+.btn-main { background: var(--accent); color: #0b0b10; }
+.btn-main:hover { background: var(--accent); filter: brightness(1.1); }
+.btn-ghost { border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--accent); }
+.btn[disabled] { opacity: .4; cursor: not-allowed; }
+.btn[aria-pressed="true"] { background: color-mix(in srgb, var(--accent) 28%, transparent); border-color: var(--accent); }
+
+/* ---------- Barra superior ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 30;
+  padding-top: env(safe-area-inset-top, 0px);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.topbar ul { list-style: none; margin: 0; padding: 0 1rem; display: flex; gap: .25rem; overflow-x: auto; scrollbar-width: none; align-items: center; }
+.topbar ul::-webkit-scrollbar { display: none; }
+.topbar a { display: block; padding: .8rem .7rem; white-space: nowrap; color: var(--ink-dim); text-decoration: none; font-size: .95rem; font-weight: 500; }
+.topbar a:hover { color: var(--ink); }
+.topbar .brand { font-family: var(--font-display); font-size: 1.15rem; color: var(--ink); margin-right: .5rem; letter-spacing: .02em; }
+
+/* ---------- Tela inicial ---------- */
+.hero {
+  position: relative; overflow: hidden;
+  min-height: min(92vh, 860px); display: flex; align-items: center;
+  padding: 4rem 0;
+  background:
+    radial-gradient(60% 70% at 85% 20%, rgba(255, 61, 129, .22), transparent 60%),
+    radial-gradient(50% 60% at 10% 90%, rgba(34, 211, 238, .16), transparent 60%),
+    var(--bg);
+}
+.hero .wrap { position: relative; z-index: 2; }
+.tag {
+  display: inline-block; margin: 0 0 1.2rem;
+  font-family: var(--font-tag); font-size: clamp(1rem, 3.4vw, 1.35rem);
+  color: #0b0b10; background: var(--c-protagonismo);
+  padding: .3rem .9rem; transform: rotate(-1.5deg);
+}
+.hero h1 { font-family: var(--font-display); margin: 0 0 1.2rem; text-transform: uppercase; }
+.h1-a { display: block; font-size: clamp(3.2rem, 13vw, 9rem); line-height: .95; letter-spacing: .005em; }
+.h1-b {
+  display: block; font-size: clamp(1.7rem, 6.2vw, 4rem); line-height: 1.05; margin-top: .25em;
+  color: transparent; -webkit-text-stroke: 2px var(--ink);
+}
+.hero-sub { font-size: clamp(1.05rem, 2.4vw, 1.3rem); color: var(--ink-dim); max-width: 60ch; }
+.hero-actions { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.6rem; max-width: none; }
+.hero-word {
+  position: absolute; right: -2vw; bottom: -6vw; z-index: 1;
+  font-family: var(--font-display); font-size: clamp(9rem, 32vw, 30rem); line-height: .8;
+  color: transparent; -webkit-text-stroke: 2px rgba(255, 255, 255, .07); user-select: none; pointer-events: none;
+}
+
+/* ---------- Introdução ---------- */
+.intro-grid, .liga-grid, .hoje-grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-top: 1.5rem; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.3rem 1.3rem .4rem; }
+.panel-wide { margin-top: 1rem; }
+.callout {
+  margin-top: 1.5rem; padding: 1.6rem; border-radius: var(--radius);
+  background: linear-gradient(120deg, rgba(255, 194, 51, .14), rgba(255, 194, 51, .03));
+  border-left: 6px solid var(--c-protagonismo);
+}
+.callout h3 { font-size: 1.5rem; }
+.note { margin-top: 1.5rem; padding: 1rem 1.2rem; border-left: 4px solid var(--c-valorizacao); background: var(--surface); border-radius: 0 var(--radius) var(--radius) 0; }
+
+.src-line { font-size: .85rem; color: var(--ink-dim); margin: .2rem 0 1rem; }
+.chip {
+  display: inline-block; min-width: 1.9rem; padding: 0 .3rem; text-align: center;
+  border: 1px solid var(--line); border-radius: 4px; text-decoration: none; color: var(--ink);
+  background: var(--bg-2); font-size: .8rem; line-height: 1.6;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- Linha do tempo ---------- */
+.tl { --accent: #ffc233; transition: --accent .5s ease; background: linear-gradient(180deg, var(--bg-2), var(--bg)); }
+.phases { list-style: none; margin: 1.6rem 0 1rem; padding: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+.phases li {
+  text-align: center; font-size: .78rem; font-weight: 700; line-height: 1.2; padding: .6rem .25rem;
+  color: var(--ink-dim); background: var(--surface); border-bottom: 4px solid var(--line);
+  transition: border-color .3s, color .3s, background-color .3s;
+}
+.phases li.is-past { border-bottom-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.phases li.is-on { color: #0b0b10; background: var(--accent); border-bottom-color: var(--accent); }
+
+.decades { display: flex; gap: .4rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.dec {
+  font: inherit; font-size: .9rem; font-weight: 500; color: var(--ink-dim);
+  background: transparent; border: 1px solid var(--line); border-radius: 999px;
+  min-height: 40px; padding: .3rem .95rem; cursor: pointer;
+}
+.dec:hover { color: var(--ink); border-color: var(--accent); }
+.dec.is-on { color: var(--ink); border-color: var(--accent); background: color-mix(in srgb, var(--accent) 20%, transparent); }
+
+.track-scroll { overflow-x: auto; padding: .5rem 0 .3rem; margin: 0 -1rem; scrollbar-color: var(--line) transparent; }
+.track {
+  --i: 0; --n: 19;
+  list-style: none; margin: 0; padding: 0 1rem; position: relative;
+  display: flex; width: calc(var(--n) * 88px + 2rem);
+}
+.track::before, .track::after {
+  content: ""; position: absolute; left: calc(1rem + 44px); top: 25px; height: 4px; border-radius: 2px;
+}
+.track::before { right: calc(1rem + 44px); background: var(--line); }
+.track::after {
+  background: var(--accent);
+  width: calc(var(--i) * 88px);
+  transition: width .5s ease;
+}
+.track li { flex: 0 0 88px; display: flex; justify-content: center; }
+.marker {
+  position: relative; z-index: 1; width: 88px; min-height: 76px;
+  display: flex; flex-direction: column; align-items: center; gap: .3rem;
+  background: none; border: 0; color: var(--ink-dim); font: inherit; cursor: pointer; padding: .3rem 0;
+}
+.mk-dot {
+  width: 20px; height: 20px; margin-top: 7px; border-radius: 50%;
+  background: var(--bg); border: 4px solid var(--line);
+  transition: transform .25s, border-color .25s, background-color .25s, box-shadow .25s;
+}
+.marker.is-past .mk-dot { border-color: var(--c, var(--accent)); }
+.marker.is-on .mk-dot { transform: scale(1.5); background: var(--c, var(--accent)); border-color: var(--c, var(--accent)); box-shadow: 0 0 0 6px color-mix(in srgb, var(--c, var(--accent)) 25%, transparent); }
+.marker:hover .mk-dot { border-color: var(--c, var(--accent)); }
+.mk-label { font-size: .85rem; font-weight: 700; margin-top: .25rem; }
+.marker.is-on .mk-label { color: var(--ink); }
+.mk-tags { display: flex; gap: 3px; min-height: 8px; }
+.mk-tag { width: 8px; height: 8px; border-radius: 2px; display: block; }
+.mk-protagonismo { background: var(--c-protagonismo); }
+.mk-resistencia { background: var(--c-resistencia); }
+.mk-representatividade { background: var(--c-representatividade); }
+.mk-valorizacao { background: var(--c-valorizacao); }
+
+.controls { display: flex; gap: .7rem; align-items: center; flex-wrap: wrap; margin: 1rem 0 1.6rem; }
+.slider-wrap { flex: 1 1 220px; min-width: 200px; order: 0; }
+.btn-ctl { min-width: 96px; }
+
+input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 44px; background: transparent; cursor: pointer; }
+input[type="range"]::-webkit-slider-runnable-track { height: 8px; border-radius: 4px; background: linear-gradient(90deg, var(--accent), var(--line)); }
+input[type="range"]::-moz-range-track { height: 8px; border-radius: 4px; background: var(--line); }
+input[type="range"]::-moz-range-progress { height: 8px; border-radius: 4px; background: var(--accent); }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 30px; height: 30px; margin-top: -11px; border-radius: 50%; background: var(--ink); border: 5px solid var(--accent); }
+input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--ink); border: 5px solid var(--accent); }
+
+/* Palco: ano grande, ilustração e cartão */
+.stage {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(1rem, 3vw, 2.5rem); align-items: start;
+  transition: opacity .22s ease, transform .22s ease;
+}
+.stage.is-out { opacity: 0; transform: translateY(10px); }
+.stage-visual {
+  position: relative; overflow: hidden; border-radius: var(--radius);
+  background: radial-gradient(90% 90% at 20% 0%, color-mix(in srgb, var(--accent) 22%, var(--surface)), var(--surface));
+  border: 1px solid var(--line); padding: 1rem 1rem 0;
+  transition: background .4s;
+}
+.year {
+  margin: 0; font-family: var(--font-display); line-height: .9;
+  font-size: clamp(4rem, 13vw, 8.5rem); color: var(--accent);
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, .5);
+  overflow-wrap: anywhere;
+}
+.scene { color: var(--accent); }
+.scene svg { display: block; width: 100%; height: auto; }
+
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--accent);
+  border-radius: var(--radius); padding: clamp(1.1rem, 3vw, 1.8rem); transition: border-color .4s;
+}
+.phase-pill {
+  display: inline-block; margin: 0 0 .8rem; padding: .15rem .7rem; font-size: .85rem; font-weight: 700;
+  border: 1px solid var(--accent); color: var(--accent); border-radius: 999px;
+}
+.card h3 { font-family: var(--font-display); font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 400; line-height: 1.05; letter-spacing: .01em; }
+.summary { font-size: 1.08rem; }
+
+.hl-list, .legend { list-style: none; margin: 1.2rem 0; padding: 0; display: grid; gap: .6rem; }
+.hl { display: block; padding: .65rem .9rem; border-radius: var(--radius); border-left: 6px solid var(--hc); background: color-mix(in srgb, var(--hc) 13%, var(--surface)); font-size: .97rem; }
+.hl strong { display: block; font-family: var(--font-tag); font-weight: 400; font-size: 1.1rem; color: var(--hc); margin-bottom: .1rem; }
+.hl--protagonismo { --hc: var(--c-protagonismo); }
+.hl--resistencia { --hc: var(--c-resistencia); }
+.hl--representatividade { --hc: var(--c-representatividade); }
+.hl--valorizacao { --hc: var(--c-valorizacao); }
+.legend { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 1.6rem; }
+.legend .hl { font-family: var(--font-tag); color: var(--hc); font-size: 1rem; padding: .4rem .8rem; }
+
+.facts { display: grid; gap: .5rem; }
+.fact {
+  font: inherit; text-align: left; color: var(--ink); cursor: pointer;
+  display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+  min-height: 48px; padding: .6rem .9rem; background: var(--bg-2);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  transition: border-color .18s, background-color .18s;
+}
+.fact:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg-2)); }
+.fact-plus { flex: none; position: relative; width: 16px; height: 16px; }
+.fact-plus::before, .fact-plus::after { content: ""; position: absolute; background: var(--accent); }
+.fact-plus::before { left: 0; right: 0; top: 7px; height: 2px; }
+.fact-plus::after { top: 0; bottom: 0; left: 7px; width: 2px; }
+.liga-jump { margin: 1rem 0 0; }
+
+/* ---------- Destaques ---------- */
+.dest-grid { display: grid; gap: 1rem; margin-top: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); }
+.dest { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.3rem; display: flex; flex-direction: column; align-items: flex-start; }
+.dest h3 { font-family: var(--font-tag); font-weight: 400; font-size: 1.45rem; color: var(--c-protagonismo); }
+.dest:nth-child(4n+2) h3 { color: var(--c-resistencia); }
+.dest:nth-child(4n+3) h3 { color: var(--c-representatividade); }
+.dest:nth-child(4n+4) h3 { color: var(--c-valorizacao); }
+.dest p { flex: 1 0 auto; }
+.dest .src-line { flex: none; }
+
+/* ---------- Liga ---------- */
+.liga { background: linear-gradient(180deg, var(--bg), #140f1c 60%, var(--bg)); --accent: #ff3d81; }
+.liga-line { list-style: none; margin: 1rem 0 0; padding: 0; display: grid; gap: .8rem; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.liga-line button {
+  width: 100%; height: 100%; text-align: left; font: inherit; color: var(--ink); cursor: pointer;
+  background: var(--surface); border: 1px solid var(--line); border-top: 5px solid var(--accent); border-radius: var(--radius); padding: .9rem 1rem;
+}
+.liga-line button:hover { border-color: var(--accent); }
+.liga-line strong { display: block; font-family: var(--font-display); font-weight: 400; font-size: 2rem; color: var(--accent); line-height: 1; }
+.liga-line span { display: block; font-size: .95rem; color: var(--ink-dim); margin-top: .3rem; }
+
+/* ---------- Atualidade ---------- */
+.stats { list-style: none; margin: 1.5rem 0 0; padding: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.stats li { border-top: 4px solid var(--c-representatividade); padding: .8rem 0 0; }
+.stats strong { display: block; font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 5vw, 2.8rem); line-height: 1; color: var(--ink); }
+.stats span { display: block; font-size: .93rem; color: var(--ink-dim); }
+
+/* ---------- Conclusão e fontes ---------- */
+.concl { background: radial-gradient(70% 90% at 50% 0%, rgba(255, 194, 51, .12), transparent 70%); }
+.concl p { font-size: 1.15rem; }
+.sources { padding-left: 1.6rem; display: grid; gap: .6rem; }
+.sources li { padding-left: .3rem; overflow-wrap: anywhere; }
+.sources li:target { background: color-mix(in srgb, var(--accent) 22%, transparent); outline: 2px solid var(--accent); border-radius: 4px; }
+.src-org { color: var(--ink-dim); font-size: .92rem; }
+.checks { padding-left: 1.2rem; display: grid; gap: .5rem; }
+.footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; color: var(--ink-dim); font-size: .95rem; }
+
+/* ---------- Diálogo ---------- */
+dialog {
+  --accent: #ffc233;
+  width: min(92vw, 640px); max-height: 86vh; padding: 0; color: var(--ink);
+  background: var(--surface); border: 1px solid var(--line); border-top: 6px solid var(--accent); border-radius: var(--radius);
+}
+dialog::backdrop { background: rgba(5, 5, 10, .8); }
+.dlg-body { padding: 1.4rem 1.4rem 1.6rem; }
+.dlg-body h3 { font-family: var(--font-display); font-weight: 400; font-size: 2rem; margin-right: 5.5rem; }
+.dlg-close { position: absolute; top: .8rem; right: .8rem; font: inherit; font-weight: 700; min-height: 44px; padding: .4rem 1rem; color: var(--ink); background: transparent; border: 2px solid var(--line); border-radius: var(--radius); cursor: pointer; }
+.dlg-close:hover { border-color: var(--accent); }
+.dlg-src { padding-left: 1.2rem; display: grid; gap: .4rem; font-size: .93rem; overflow-wrap: anywhere; }
+dialog[open] { animation: pop .2s ease; }
+@keyframes pop { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: none; } }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 860px) {
+  .stage { grid-template-columns: 1fr; }
+  .phases { grid-template-columns: repeat(3, 1fr); }
+  .phases li { font-size: .74rem; }
+}
+@media (max-width: 520px) {
+  body { font-size: 1rem; }
+  .controls .btn-ctl { flex: 1 1 40%; }
+  .slider-wrap { order: -1; flex-basis: 100%; }
+  .hero-actions .btn { flex: 1 1 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}
+
+</style>
+</head>
+<body>
+  <a class="skip" href="#linha-do-tempo">Ir direto para a linha do tempo</a>
+
+  <header class="topbar">
+    <nav aria-label="Seções da página">
+      <ul>
+        <li><a href="#inicio" class="brand">Batalha de Rima</a></li>
+        <li><a href="#introducao">Introdução</a></li>
+        <li><a href="#linha-do-tempo">Linha do tempo</a></li>
+        <li><a href="#destaques">Destaques</a></li>
+        <li><a href="#liga">Liga Central</a></li>
+        <li><a href="#atualidade">Atualidade</a></li>
+        <li><a href="#fontes">Fontes</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- TELA INICIAL -->
+    <section id="inicio" class="hero" aria-labelledby="titulo">
+      <div class="wrap">
+        <p class="tag">20 de novembro · Dia Nacional de Zumbi e da Consciência Negra</p>
+        <h1 id="titulo">
+          <span class="h1-a">Batalha de Rima:</span>
+          <span class="h1-b">Voz, Cultura e Resistência</span>
+        </h1>
+        <p class="hero-sub">Uma viagem pelos anos para entender como a rima improvisada saiu das ruas, dos metrôs e das praças e virou uma arte com público no país inteiro — e como a população negra esteve no centro dessa história.</p>
+        <p class="hero-actions">
+          <a class="btn btn-main" href="#linha-do-tempo">Começar a linha do tempo</a>
+          <a class="btn btn-ghost" href="#introducao">Ler a introdução</a>
+        </p>
+      </div>
+      <div class="hero-word" aria-hidden="true">RIMA</div>
+    </section>
+
+    <!-- INTRODUÇÃO -->
+    <section id="introducao" class="section" aria-labelledby="intro-h">
+      <div class="wrap">
+        <h2 id="intro-h">Antes de começar</h2>
+        <div class="intro-grid">
+          <article class="panel">
+            <h3>O que é uma batalha de rima?</h3>
+            <p>É um duelo de MCs que improvisam rimas na hora, atacando e respondendo ao adversário, com a plateia e, em muitas batalhas, jurados decidindo quem levou a melhor. Vencer depende de improviso, criatividade e carisma.</p>
+            <p class="src-line" data-src="35"></p>
+          </article>
+          <article class="panel">
+            <h3>Qual a relação com o hip-hop?</h3>
+            <p>A batalha é uma vertente do hip-hop, cultura de rua que também reúne DJs, dançarinos de breaking e grafiteiros. Nasceu no Bronx, em Nova York, nos anos 1970, e chegou a São Paulo nos anos 1980.</p>
+            <p class="src-line" data-src="5,7,35"></p>
+          </article>
+          <article class="panel">
+            <h3>Por que ela importa para o Brasil?</h3>
+            <p>As batalhas são uma forma de expressão cultural, especialmente entre a juventude marginalizada, e hoje também uma carreira: têm prêmios, ligas, transmissões e contratos com gravadoras.</p>
+            <p class="src-line" data-src="39,18,27"></p>
+          </article>
+        </div>
+        <aside class="callout" aria-labelledby="prot-h">
+          <h3 id="prot-h">O protagonismo negro está na raiz e no presente</h3>
+          <p>O hip-hop surgiu em um bairro marcado por racismo. No Brasil, o rap se firmou com discos como <em>Consciência Black</em>, e pesquisadores ligam a rima improvisada à oralidade africana e afro-brasileira, do canto em desafio à capoeira. Segundo o IBGE, 56,1% da população brasileira se declara preta ou parda.</p>
+          <p>Isso não quer dizer que todo MC seja negro, nem que a batalha tenha uma única origem: ela foi construída por muitos artistas e comunidades. O que este projeto mostra, com fontes, é onde a contribuição negra aparece, e ela aparece em vários períodos.</p>
+          <p class="src-line" data-src="3,5,8,12,14,16"></p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- LINHA DO TEMPO -->
+    <section id="linha-do-tempo" class="section tl" aria-labelledby="tl-h">
+      <div class="wrap">
+        <h2 id="tl-h">Linha do tempo interativa</h2>
+        <p class="lead">Escolha um ano no controle abaixo, use as setas ou toque num marcador. Cada momento mostra o que acontecia na cultura das batalhas, e os selos coloridos indicam onde entram protagonismo negro, resistência, representatividade e valorização dos artistas.</p>
+
+        <ol class="phases" id="phases" aria-label="Etapas da história"></ol>
+        <div class="decades" id="decades" role="group" aria-label="Ir para uma década"></div>
+
+        <div class="track-scroll" id="track-scroll">
+          <ol class="track" id="track"></ol>
+        </div>
+
+        <div class="controls">
+          <button type="button" class="btn btn-ctl" id="prev" aria-label="Período anterior">Voltar</button>
+          <div class="slider-wrap">
+            <label for="slider" class="sr-only">Ano da linha do tempo</label>
+            <input type="range" id="slider" min="0" max="0" step="1" value="0">
+          </div>
+          <button type="button" class="btn btn-ctl" id="next" aria-label="Próximo período">Avançar</button>
+          <button type="button" class="btn btn-ghost" id="play" aria-pressed="false">Percorrer sozinho</button>
+        </div>
+        <p class="sr-only" id="live" role="status"></p>
+
+        <div class="stage" id="stage">
+          <div class="stage-visual">
+            <p class="year" id="year" aria-hidden="true"></p>
+            <div class="scene" id="scene" role="img"></div>
+          </div>
+          <article class="card" id="card" aria-labelledby="ev-title">
+            <p class="phase-pill" id="ev-phase"></p>
+            <h3 id="ev-title"></h3>
+            <p class="summary" id="ev-summary"></p>
+            <ul class="hl-list" id="ev-hl"></ul>
+            <div id="ev-facts-wrap">
+              <h4>Toque para saber mais</h4>
+              <div class="facts" id="ev-facts"></div>
+            </div>
+            <p class="src-line" id="ev-src"></p>
+            <p class="liga-jump" id="ev-liga" hidden><a class="btn btn-main" href="#liga">Ver a seção da Liga Central de MCs</a></p>
+          </article>
+        </div>
+
+        <ul class="legend" aria-label="Legenda dos selos">
+          <li class="hl hl--protagonismo">Protagonismo negro</li>
+          <li class="hl hl--resistencia">Resistência cultural</li>
+          <li class="hl hl--representatividade">Representatividade</li>
+          <li class="hl hl--valorizacao">Valorização dos artistas</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- DESTAQUES -->
+    <section id="destaques" class="section" aria-labelledby="dest-h">
+      <div class="wrap">
+        <h2 id="dest-h">Destaques</h2>
+        <p class="lead">Sete ideias que atravessam a história. Em cada uma, o botão leva ao ponto da linha do tempo em que ela aparece com mais força.</p>
+        <div class="dest-grid" id="dest-grid"></div>
+      </div>
+    </section>
+
+    <!-- LIGA CENTRAL -->
+    <section id="liga" class="section liga" aria-labelledby="liga-h">
+      <div class="wrap">
+        <h2 id="liga-h">Liga Central de MCs</h2>
+        <p class="lead">Um capítulo recente de uma história antiga: a busca por organizar as batalhas e por valorizar quem rima. Tudo abaixo vem do site oficial da Liga e de reportagens; onde algo é declaração da própria Liga, o texto diz isso.</p>
+
+        <div class="liga-grid">
+          <article class="panel">
+            <h3>O que é</h3>
+            <p>Segundo o site oficial, é um sistema de ranking que une batalhas filiadas de todo o país em uma só competição. Cada MC acumula pontos, bônus (chamados de Twolalas) e títulos ao longo da temporada. Para se filiar, a batalha precisa estar com a distribuição de royalties ativa em uma das distribuidoras parceiras. Jotapê é o fundador e presidente.</p>
+            <p class="src-line" data-src="32"></p>
+          </article>
+          <article class="panel">
+            <h3>Como se liga às batalhas</h3>
+            <p>As batalhas se filiam e seus resultados passam a valer para o ranking geral. Cada vitória em uma batalha filiada gera pontos para o MC. O ranking semanal é atualizado todo domingo e existe também um ranking anual.</p>
+            <p class="src-line" data-src="32"></p>
+          </article>
+          <article class="panel">
+            <h3>Por que fala de organização</h3>
+            <p>Em 2024, o entrevistado Marcus Perez lembrava que não existe associação que centralize regras ou a criação de batalhas. A Liga Central propõe um ranking comum a todas as batalhas que se filiarem.</p>
+            <p class="src-line" data-src="35,32"></p>
+          </article>
+          <article class="panel">
+            <h3>Valorização dos MCs</h3>
+            <p>O líder semanal recebe R$ 250 e o líder anual, R$ 10 mil, segundo o site. A Copa Central de Freestyle, mata-mata entre os 16 mais bem classificados, está marcada para 12/12 em São Paulo, com o que a Liga chama de maior premiação individual das batalhas. O Duds MDB conta que, segundo o vídeo de lançamento, o prêmio semanal é pago pelo próprio fundador.</p>
+            <p class="src-line" data-src="32,34"></p>
+          </article>
+        </div>
+
+        <div class="panel panel-wide">
+          <h3>Mais profissional, como?</h3>
+          <p>O objetivo declarado da Liga é profissionalizar o freestyle, dar visibilidade aos MCs e criar um ecossistema competitivo justo e transparente. Na leitura do Duds MDB, o projeto mira uma lógica antiga da cena: MCs que movimentam milhões de visualizações e lotam eventos costumam seguir sem remuneração proporcional. Prêmios regulares, ranking e filiação de batalhas são os instrumentos descritos no site da Liga.</p>
+          <p class="src-line" data-src="32,34"></p>
+        </div>
+
+        <h3 class="sub-h">A Liga na história</h3>
+        <ol class="liga-line" id="liga-line">
+          <li><button type="button" data-go="2003"><strong>2003</strong><span>Liga dos MCs, da Brutal Crew, no Rio de Janeiro</span></button></li>
+          <li><button type="button" data-go="2012"><strong>2012</strong><span>Duelo de MCs Nacional reúne MCs de vários estados</span></button></li>
+          <li><button type="button" data-go="2024"><strong>2024</strong><span>FMS Brasil, liga profissional, estreia no país</span></button></li>
+          <li><button type="button" data-go="2026"><strong>2026</strong><span>Liga Central de MCs propõe um ranking único</span></button></li>
+        </ol>
+
+        <p class="note"><strong>Nomes parecidos, iniciativas diferentes.</strong> A Liga dos MCs (2003) e a Liga Central de MCs (2026) não são a mesma organização. A Liga Central é muito recente: no site oficial, em 29/09/2026, aparecem 699 MCs ativos e 24 batalhas filiadas, números que mudam com o tempo. Ainda é cedo para medir seus resultados.</p>
+        <p class="src-line" data-src="21,32,33"></p>
+      </div>
+    </section>
+
+    <!-- ATUALIDADE -->
+    <section id="atualidade" class="section" aria-labelledby="hoje-h">
+      <div class="wrap">
+        <h2 id="hoje-h">Como as batalhas estão hoje</h2>
+        <p class="lead">Três forças ampliaram o alcance das batalhas: a internet, os grandes eventos e as organizações que criaram circuitos, regras comuns e prêmios.</p>
+        <div class="hoje-grid">
+          <article class="panel"><h3>Internet</h3><p>A Batalha da Aldeia levou uma roda de praça ao YouTube em 2016 e, com a pandemia, os encontros passaram a ser virtuais. Em 2024, o canal passava de 4,6 milhões de inscritos.</p><p class="src-line" data-src="24,25,27"></p></article>
+          <article class="panel"><h3>Grandes eventos</h3><p>A BDA fez 10 anos no Vale do Anhangabaú, em São Paulo. O Duelo de MCs Nacional reúne MCs de todos os estados e o Red Bull FrancaMente coroou Big Mike em 2024.</p><p class="src-line" data-src="22,31,36"></p></article>
+          <article class="panel"><h3>Organizações</h3><p>Coletivos como a Brutal Crew e a Família de Rua criaram circuitos; a FMS Brasil trouxe uma liga profissional; a Liga Central de MCs propõe um ranking único.</p><p class="src-line" data-src="21,22,29,32"></p></article>
+        </div>
+        <ul class="stats" id="stats"></ul>
+      </div>
+    </section>
+
+    <!-- CONCLUSÃO -->
+    <section id="conclusao" class="section concl" aria-labelledby="concl-h">
+      <div class="wrap narrow">
+        <h2 id="concl-h">Da rua para o mundo, sem perder a voz</h2>
+        <p>A batalha de rima percorreu um caminho longo: do canto em desafio e da oralidade herdada, passando pelas esquinas e estações de São Paulo, até praças de Barueri, viadutos de Belo Horizonte e transmissões com centenas de milhares de pessoas.</p>
+        <p>Ela é uma manifestação cultural construída por diferentes artistas e comunidades, com forte participação e protagonismo negro. Ao crescer, passou a buscar também reconhecimento e valorização dos MCs: prêmios, ligas, contratos.</p>
+        <p>O que continua igual é o essencial: um espaço de voz, identidade e representação.</p>
+        <p><a class="btn btn-main" href="#linha-do-tempo">Voltar à linha do tempo</a></p>
+      </div>
+    </section>
+
+    <!-- FONTES -->
+    <section id="fontes" class="section" aria-labelledby="fontes-h">
+      <div class="wrap">
+        <h2 id="fontes-h">Fontes e referências</h2>
+        <p class="lead">Consultadas em 29/09/2026. Os números entre colchetes na linha do tempo levam até estas fontes.</p>
+        <ol class="sources" id="sources"></ol>
+
+        <h3 class="sub-h">Notas de verificação</h3>
+        <ul class="checks">
+          <li>Algumas matérias situam a criação da Liga dos MCs em Belo Horizonte. As fontes que detalham a Brutal Crew a ligam à Lapa, no Rio de Janeiro, e usamos essa versão.</li>
+          <li>Os relatos divergem sobre o local da primeira Batalha do Real: uma praça da Lapa ou a sinuca da Rua Riachuelo, 73. Por isso o projeto não afirma um local.</li>
+          <li>A Batalha do Real aparece como "considerada" a primeira batalha de rimas do país, e não como fato absoluto.</li>
+          <li>O verbete da Wikipédia sobre a Liga dos MCs e o do Duelo de MCs divergem sobre quando a Liga deixou de ser o principal evento; usamos o que o verbete do Duelo afirma e sinalizamos a divergência.</li>
+          <li>Os números de audiência da BDA 10 anos vêm de uma única fonte.</li>
+          <li>A Liga Central de MCs é muito recente: as informações vêm do site oficial e de uma reportagem de abril de 2026.</li>
+          <li>Verbetes da Wikipédia foram usados como apoio, sempre junto a outras fontes; vale conferir as referências deles.</li>
+          <li>Onde não havia fonte confiável, a informação ficou de fora.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p>Projeto escolar para o Dia Nacional de Zumbi e da Consciência Negra. Feito com HTML, CSS e JavaScript, sem backend.</p>
+    </div>
+  </footer>
+
+  <dialog id="dialog" aria-labelledby="dlg-title">
+    <div class="dlg-body">
+      <button type="button" class="dlg-close" id="dlg-close" aria-label="Fechar janela">Fechar</button>
+      <p class="phase-pill" id="dlg-kicker"></p>
+      <h3 id="dlg-title"></h3>
+      <div id="dlg-text"></div>
+      <h4>Fontes desta informação</h4>
+      <ul class="dlg-src" id="dlg-src"></ul>
+    </div>
+  </dialog>
+
+  <script>
+/* Dados do projeto "Batalha de Rima: Voz, Cultura e Resistência".
+   Todo o conteúdo histórico vem das fontes numeradas em SOURCES.
+   Consulta feita em 29/09/2026. Onde as fontes divergem, isso está dito no texto. */
+window.BR_DATA = (function () {
+  "use strict";
+
+  var SOURCES = [
+    { t: "Lei nº 12.519, de 10 de novembro de 2011 (Dia Nacional de Zumbi e da Consciência Negra)", o: "Planalto", u: "https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2011/lei/l12519.htm" },
+    { t: "Sancionada criação do Dia Nacional de Zumbi e da Consciência Negra", o: "Senado Notícias, 11/11/2011", u: "https://www12.senado.leg.br/noticias/materias/2011/11/11/sancionada-criacao-do-dia-nacional-de-zumbi-e-da-consciencia-negra" },
+    { t: "20 de novembro é o Dia Nacional de Zumbi e da Consciência Negra", o: "Tribunal de Justiça do Distrito Federal e dos Territórios (TJDFT)", u: "https://www.tjdft.jus.br/acessibilidade/publicacoes/sementes-da-equidade/20-de-novembro-e-o-dia-nacional-de-zumbi-e-da-consciencia-negra" },
+    { t: "Dia Nacional de Zumbi e da Consciência Negra (feriado nacional desde 2023)", o: "Wikipédia (verificar as referências do verbete)", u: "https://pt.wikipedia.org/wiki/Dia_Nacional_de_Zumbi_e_da_Consci%C3%AAncia_Negra" },
+    { t: "Cultura de rua", o: "Sesc São Paulo", u: "https://www.sescsp.org.br/editorial/cultura-de-rua/" },
+    { t: "Os anos 1980 – Surgimento do Hip Hop no Brasil e o protagonismo das mulheres", o: "Sesc São Paulo", u: "https://www.sescsp.org.br/editorial/cultura-hip-hop-resistencia-e-filosofia-das-ruas-os-anos-1980/" },
+    { t: "Hip Hop: 50 anos de cultura de rua (Caminhos da Reportagem)", o: "TV Brasil, 2023", u: "https://tvbrasil.ebc.com.br/caminhos-da-reportagem/2023/11/hip-hop-50-anos-de-cultura-de-rua" },
+    { t: "Como foi o surgimento da cultura hip-hop no Brasil", o: "Red Bull Brasil", u: "https://www.redbull.com/br-pt/O-surgimento-da-cultura-hip-hop-no-Brasil" },
+    { t: "Hip-Hop Cultura de Rua (coletânea de 1988)", o: "Wikipédia (verificar as referências do verbete)", u: "https://pt.wikipedia.org/wiki/Hip-Hop_Cultura_de_Rua" },
+    { t: "Hip hop no Brasil", o: "Wikipédia (verificar as referências do verbete)", u: "https://pt.wikipedia.org/wiki/Hip_hop_no_Brasil" },
+    { t: "Racionais MC's", o: "Wikipédia em inglês (verificar as referências do verbete)", u: "https://en.wikipedia.org/wiki/Racionais_MC%27s" },
+    { t: "Artigo da revista Kwanissa sobre oralidade e cultura negra (cita Souza, 2005)", o: "Universidade Federal do Maranhão (UFMA)", u: "https://periodicoseletronicos.ufma.br/index.php/kwanissa/article/download/16396/8808" },
+    { t: "Contextualização sociopolítica dos Cocos", o: "Revista Música, v. 24, n. 2, dez. 2024 (USP)", u: "https://repositorio.usp.br/directbitstream/c8335083-52b6-4793-adc5-11f92cbbc2fa/003233422.pdf" },
+    { t: "Rap e duelo de rima na escola: experiências com base na pedagogia hip hop", o: "Artigo acadêmico (Redalyc)", u: "https://www.redalyc.org/journal/298/29881643047/movil/" },
+    { t: "De repente o rap na educação do negro", o: "Dissertação, Universidade Federal da Paraíba (UFPB)", u: "https://repositorio.ufpb.br/jspui/bitstream/tede/4870/1/arquivototal.pdf" },
+    { t: "Batalhas de Rima: juventude negra, cultura e resiliência no interior da Amazônia", o: "Geledés – Instituto da Mulher Negra, 2025", u: "https://www.geledes.org.br/batalhas-de-rima-juventude-negra-cultura-e-resiliencia-no-interior-da-amazonia/" },
+    { t: "Batalha de rima: estratégia afrodiaspórica de saúde", o: "Repositório da Universidade Estadual de Londrina (UEL), 2025", u: "https://repositorio.uel.br/items/93a839b5-a108-4f17-8efa-8cc999623021" },
+    { t: "Entre novidades e tradicionalismo, batalhas de rima explodem em popularidade", o: "Billboard Brasil, 2024", u: "https://billboard.com.br/79910-2/" },
+    { t: "Tradicional Batalha do Real reúne MCs campeões de rodas culturais na Lapa", o: "Pitaya Cultural, 2019", u: "https://pitayacultural.com.br/musica/tradicional-batalha-do-real-reune-mcs-campeoes-de-rodas-culturais-este-mes-na-lapa/" },
+    { t: "A tradicional Batalha do Real", o: "Acervo Bocada Forte", u: "https://acervobf.bocadaforte.com.br/reportagens/a-tradicional-batalha-do-real.html" },
+    { t: "Liga dos MCs", o: "Wikipédia (verificar as referências do verbete)", u: "https://pt.wikipedia.org/wiki/Liga_dos_MCs" },
+    { t: "Duelo de MCs", o: "Wikipédia (o verbete cita jornais como G1, Estado de Minas e Uai)", u: "https://pt.wikipedia.org/wiki/Duelo_de_MCs" },
+    { t: "O cara que movimentou 110 batalhas de rima em SP (entrevista com Mamuti)", o: "Polifonia, no Medium, 2017", u: "https://medium.com/@polifonia19/o-cara-que-movimentou-110-batalhas-de-rima-em-sp-146b555df8fd" },
+    { t: "Batalha de rimas da Aldeia terá espaço no calendário oficial de Barueri", o: "Câmara Municipal de Barueri, 2021", u: "https://www.barueri.sp.leg.br/institucional/noticias/batalha-de-rimas-da-aldeia-tera-espaco-no-calendario-oficial-de-barueri" },
+    { t: "Batalha da Aldeia 05 Anos (texto de divulgação com depoimento de Bob 13)", o: "Ticket360, 2021", u: "https://www.ticket360.com.br/evento/22106/ingressos-para-batalha-da-aldeia-05-anos-com-jovem-dex" },
+    { t: "Batalha da Aldeia ultrapassa marca de 3 milhões de inscritos no YouTube", o: "Rapdab, 2020", u: "https://www.rapdab.com.br/2020/06/09/batalha-da-aldeia-ultrapassa-marca-de-3-milhoes-de-inscritos-no-youtube/" },
+    { t: "Batalha da Aldeia: conheça a maior disputa de rimas da América Latina", o: "Metrópoles, 2024", u: "https://www.metropoles.com/entretenimento/batalha-da-aldeia-conheca-a-maior-disputa-de-rimas-da-america-latina" },
+    { t: "Batalha da Aldeia: o que é, quando acontece e sua importância", o: "Terra, 2024", u: "https://www.terra.com.br/visao-do-corre/batalha-da-aldeia-o-que-e-quando-acontece-e-sua-importancia,816dea46671ac152947447bcd3c5597bs03y5368.html" },
+    { t: "Freestyle Master Series (FMS)", o: "Wikipédia (verificar as referências do verbete)", u: "https://pt.wikipedia.org/wiki/Freestyle_Master_Series" },
+    { t: "FMS Brasil: o que aconteceu no primeiro encontro", o: "El Planteo, 2024", u: "https://elplanteo.com/fms-brasil-portugues/" },
+    { t: "Big Mike é o campeão do Red Bull FrancaMente 2024", o: "Red Bull Brasil", u: "https://www.redbull.com/br-pt/musica-red-bull-francamente-2024-final-nacional" },
+    { t: "A Liga (página institucional)", o: "Liga Central de MC's – site oficial", u: "https://www.centraldemcs.com.br/a-liga" },
+    { t: "Página inicial (números exibidos em 29/09/2026)", o: "Liga Central de MC's – site oficial", u: "https://www.centraldemcs.com.br/" },
+    { t: "Jotapê destaca Liga Central de MCs e nova era do freestyle", o: "Duds MDB, 28/04/2026", u: "https://dudsmdb.com.br/liga-central-de-mcs-profissionalizacao-freestyle" },
+    { t: "Batalha de rima: o esporte da música (entrevista com Marcus Perez)", o: "Máquina do Esporte, 2024", u: "https://maquinadoesporte.com.br/analise/batalha-de-rima-o-esporte-da-musica/" },
+    { t: "Batalha da Aldeia completa 10 anos e chega ao Vale do Anhangabaú", o: "Rap Mídia, 2026 (fonte única para os números)", u: "https://rapmidia.com.br/batalha-da-aldeia-completa-10-anos-e-chega-ao-vale-do-anhangabau-com-516-mil-espectadores-simultaneos/" },
+    { t: "20 de Novembro – Dia Nacional da Consciência Negra (cita a Lei nº 10.639/2003)", o: "Prefeitura de Aurora (CE)", u: "https://aurora.ce.gov.br/informa.php?id=1053" },
+    { t: "A Batalha do Real moldou o rap carioca", o: "Vice Brasil", u: "https://www.vice.com/pt/article/a-batalha-do-real-moldou-o-rap-carioca/" },
+    { t: "Conheça as maiores batalhas de rima do Brasil", o: "Nova Brasil FM, 2024", u: "https://novabrasilfm.com.br/arte-e-cultura/brasilidade/conheca-as-maiores-batalhas-de-rima-do-brasil" }
+  ];
+
+  var PHASES = ["Contexto cultural", "Surgimento", "Expansão", "Organização", "Profissionalização", "Cenário atual"];
+
+  var DECADES = [
+    { id: "raizes", label: "Raízes" },
+    { id: "1970", label: "Anos 70" },
+    { id: "1980", label: "Anos 80" },
+    { id: "1990", label: "Anos 90" },
+    { id: "2000", label: "Anos 2000" },
+    { id: "2010", label: "Anos 2010" },
+    { id: "2020", label: "Anos 2020" }
+  ];
+
+  var HIGHLIGHTS = {
+    protagonismo: "Protagonismo negro",
+    resistencia: "Resistência cultural",
+    representatividade: "Representatividade",
+    valorizacao: "Valorização dos artistas"
+  };
+
+  var EVENTS = [
+    {
+      id: "raizes", label: "Raízes", decade: "raizes", phase: 0, scene: "roda", accent: "#ffc233",
+      alt: "Ilustração de uma roda de pessoas em círculo com ondas sonoras",
+      title: "Antes do microfone: a palavra como herança",
+      summary: "Muito antes das batalhas de rima, a palavra falada, cantada e improvisada já servia para lembrar, provocar e resistir. O repente e o coco de embolada têm o improviso em forma de desafio; a capoeira, o coco e outras manifestações carregam a presença africana e afro-brasileira na música e na oralidade do país.",
+      hl: [
+        ["protagonismo", "A influência negra na tradição musical brasileira, na capoeira e nas formas de resistência foi passada de geração em geração pela oralidade."],
+        ["resistencia", "Pesquisa da USP aponta que a continuidade dos cocos, alvo de intolerância cultural e religiosa, é uma forma de resistência cultural."]
+      ],
+      facts: [
+        { t: "Improviso em forma de desafio", src: [13, 15], d: "O coco de embolada é uma modalidade do coco ligada à poesia popular, como o repente: não tem dança, e a música nasce do improviso poético, em geral na disputa ou combinação entre uma dupla de cantadores, com pandeiros ou ganzás.\n\nUma dissertação da UFPB compara: assim como nos desafios nordestinos, nas batalhas de rima do hip-hop dois ou mais competidores se revezam improvisando versos, e a rapidez de raciocínio é posta à prova." },
+        { t: "Oralidade como memória", src: [12], d: "Segundo um artigo da revista Kwanissa (UFMA), que cita Souza (2005), a escrita não é a única forma de registrar conhecimentos: a oralidade serviu para preservar manifestações culturais africanas no Brasil. A influência negra na música, a capoeira, as formas de resistência e as religiões de matriz africana foram transmitidas de geração em geração." },
+        { t: "MCs e griots: uma leitura de pesquisa", src: [16, 14], d: "Um texto publicado pelo Geledés lembra que a música \"Griot\", do MC Marechal, aproxima os MCs dos griots, contadores de histórias da África Ocidental que usavam a oralidade para difundir contos, mitos e ensinamentos.\n\nUm artigo acadêmico também destaca o canto falado como característica africana presente na musicalidade afro-americana. É uma interpretação de artistas e pesquisadores, e não uma linha reta de origem: as batalhas de hoje são fruto de várias influências." }
+      ],
+      src: [12, 13, 14, 15, 16]
+    },
+    {
+      id: "1695", label: "1695", decade: "raizes", phase: 0, scene: "serra", accent: "#ff5a5f",
+      alt: "Ilustração de montanhas e um sol, evocando a Serra da Barriga",
+      title: "20 de novembro: Zumbi e a memória de Palmares",
+      summary: "Em 20 de novembro de 1695, Zumbi, líder do Quilombo dos Palmares, o maior da história do Brasil, foi capturado e morto. Séculos depois, a data virou símbolo da resistência da população negra ao regime escravocrata e ao racismo — e é o Dia Nacional de Zumbi e da Consciência Negra, que inspira este projeto.",
+      hl: [
+        ["resistencia", "Zumbi é considerado símbolo da luta e da resistência dos negros ao regime escravocrata e ao racismo."]
+      ],
+      facts: [
+        { t: "Por que 20 de novembro?", src: [2, 3], d: "A data faz referência à morte de Zumbi dos Palmares, em 1695. A comemoração busca chamar a atenção para o racismo e para suas consequências para a população negra, e também reconhecer a influência e a presença da cultura de origem africana no Brasil." },
+        { t: "A lei de 2011", src: [1, 2], d: "A Lei nº 12.519, sancionada em 10 de novembro de 2011, instituiu o Dia Nacional de Zumbi e da Consciência Negra, a ser comemorado em 20 de novembro. Na época, a lei não tornou a data feriado nacional." },
+        { t: "Feriado nacional desde 2023", src: [4], d: "Segundo a Wikipédia, o presidente sancionou em 21 de dezembro de 2023 a lei que tornou o 20 de novembro feriado nacional. Até 2022, vários estados e mais de mil cidades já tinham instituído feriado por normas locais. Vale conferir as referências do verbete." }
+      ],
+      src: [1, 2, 3, 4]
+    },
+    {
+      id: "1970", label: "Anos 1970", decade: "1970", phase: 0, scene: "bronx", accent: "#22d3ee",
+      alt: "Ilustração de prédios de uma cidade à noite",
+      title: "Nasce o hip-hop, em Nova York",
+      summary: "O ponto de partida do movimento é o sul do Bronx, em Nova York, nos anos 1970: um distrito marcado por pobreza, desemprego, brutalidade policial, brigas de gangues e racismo. Dali saiu uma cultura de rua feita de DJs, MCs, dançarinos de breaking e grafiteiros, que transformou a rua em palco.",
+      hl: [
+        ["resistencia", "Uma cultura criada em meio à exclusão, que fez de som, corpo e palavra uma forma própria de expressão."]
+      ],
+      facts: [
+        { t: "Festas de rua e trens pintados", src: [5], d: "O hip-hop se desenvolveu a partir da realidade urbana: nos vagões de trens transformados em telas por grafiteiros, nos encontros de b-boys e b-girls pelas esquinas e nas block parties, festas de rua comandadas por DJs." },
+        { t: "Juventude marginalizada e expressão cultural", src: [39], d: "A Nova Brasil FM lembra que as competições de improviso, com raízes no hip-hop surgido nos anos 1970 no Bronx, se tornaram uma forma de expressão cultural especialmente entre a juventude marginalizada e se espalharam pelo mundo, inclusive pelo Brasil." }
+      ],
+      src: [5, 39]
+    },
+    {
+      id: "1983", label: "1983", decade: "1980", phase: 0, scene: "street", accent: "#ff7a1a",
+      alt: "Ilustração de círculos e arcos em movimento, como uma roda de dança no chão",
+      title: "O hip-hop chega às ruas de São Paulo",
+      summary: "O hip-hop desembarcou no Brasil no início dos anos 1980, por São Paulo. Em 1983, Nelson Triunfo, dançarino e figura pioneira, já dançava na esquina da rua 24 de Maio, no centro da cidade, e sentia o peso da repressão policial em plena ditadura militar.",
+      hl: [
+        ["resistencia", "Ocupar o centro da cidade para dançar e criar significava enfrentar preconceito e repressão."]
+      ],
+      facts: [
+        { t: "Cartas, jornais e fanzines", src: [6, 10], d: "Naquela época a comunicação se dava por cartas, matérias de jornal impresso e fanzines, principal fonte de troca de informações sobre uma cultura que começava a surgir em vários estados. Os jovens da periferia passaram a se reunir na Galeria 24 de Maio e na estação São Bento do metrô." },
+        { t: "Nelson Triunfo", src: [7, 10], d: "A TV Brasil o descreve como dançarino de breaking e figura pioneira do hip-hop no país. Segundo a Wikipédia, o pernambucano chegou a São Paulo em 1977 para dançar soul e funk e é considerado por muitos o \"pai do hip-hop brasileiro\"." },
+        { t: "Um estilo visto com preconceito", src: [8, 10], d: "Na época, o rap era considerado um estilo violento e típico da periferia. O rapper Rappin' Hood relata que os frequentadores dos pontos de hip-hop em São Paulo eram perseguidos por fazerem rap." }
+      ],
+      src: [6, 7, 8, 10]
+    },
+    {
+      id: "1980", label: "Anos 1980", decade: "1980", phase: 0, scene: "metro", accent: "#ff3d81",
+      alt: "Ilustração de um túnel de metrô com trilhos e um farol",
+      title: "Estação São Bento: a encruzilhada do hip-hop",
+      summary: "Nos anos 1980, a estação São Bento do metrô virou o epicentro do hip-hop paulistano: cerca de dois mil jovens se reuniam aos sábados para trocar informações, dançar e criar. Ali se cruzaram dançarinos, DJs, MCs e grafiteiros — e também mulheres pioneiras do rap, como Sharylaine e Rose MC.",
+      hl: [
+        ["representatividade", "Mulheres estavam ali desde o início. Sharylaine, por exemplo, participava das rodas de breaking, cantava nos eventos e formou o grupo Rap Girls."]
+      ],
+      facts: [
+        { t: "Festivais e campeonatos", src: [6], d: "A São Bento virou referência para festivais: campeonatos e mostras de breaking, apresentações de grupos de rap com Mestres de Cerimônias animando o público, DJs e grafiteiros que ilustravam jaquetas e calças jeans das crews." },
+        { t: "Pioneiras e pioneiros", src: [6], d: "O Sesc cita, entre nomes que se deslocavam de várias cidades para os encontros: Kika Maida, Rose MC, Sharylaine, Bete, Baby, Renata, Lady Rap, Thaíde e DJ Hum, Nelson Triunfo, Nino Brown, MC Jack e Rooney Yo-Yo." },
+        { t: "Nascem os Racionais MC's", src: [7], d: "Segundo a TV Brasil, a São Bento é o local em que KL Jay e Mano Brown se conhecem e criam os Racionais MC's, um dos principais grupos de rap do Brasil." }
+      ],
+      src: [5, 6, 7]
+    },
+    {
+      id: "1988", label: "1988", decade: "1980", phase: 0, scene: "vinyl", accent: "#ffd23f",
+      alt: "Ilustração de um disco de vinil",
+      title: "O primeiro disco de rap do Brasil",
+      summary: "Em setembro de 1988, a coletânea Hip-Hop Cultura de Rua, lançada pela Eldorado, foi o primeiro disco dedicado só ao rap e à cultura hip-hop produzido no país. Nele estavam Thaíde & DJ Hum, MC Jack, Código 13 e O Credo. No mesmo ano nasceu o grupo Racionais MC's.",
+      hl: [
+        ["valorizacao", "Um disco inteiro dedicado ao rap deu visibilidade a artistas que se formaram nas ruas e na estação São Bento."]
+      ],
+      facts: [
+        { t: "A coletânea", src: [9, 7], d: "Lançada em setembro de 1988 pela gravadora Eldorado (selo Paralelo), a coletânea teve produção de Nasi e André Jung, integrantes da banda Ira!, o que deu ao disco uma sonoridade híbrida, misturando batidas eletrônicas com instrumentos reais." },
+        { t: "Racionais MC's", src: [11], d: "A formação original do grupo, de 1988, reuniu Mano Brown, Ice Blue, Edi Rock e o DJ KL Jay, todos de bairros periféricos da região de São Paulo. Os Racionais são frequentemente considerados o mais importante grupo de rap brasileiro." }
+      ],
+      src: [7, 9, 11]
+    },
+    {
+      id: "1989", label: "1989", decade: "1980", phase: 0, scene: "sleeve", accent: "#b794ff",
+      alt: "Ilustração de uma capa de disco com o título Consciência Black",
+      title: "Consciência Black, Vol. 1",
+      summary: "No ano seguinte ao primeiro disco de rap, a coletânea Consciência Black Vol. 1 apresentou os Racionais MC's ao público com a faixa \"Pânico na Zona Sul\". O título já aproximava o rap da ideia de consciência negra. Sharylaine foi a única mulher do disco, com \"Nossos Dias\".",
+      hl: [
+        ["protagonismo", "Um disco chamado Consciência Black projetou o grupo que se tornaria referência do rap nacional."],
+        ["representatividade", "Sharylaine foi a única mulher da coletânea. O primeiro álbum solo dela veio após 40 anos, com recursos próprios."]
+      ],
+      facts: [
+        { t: "\"Pânico na Zona Sul\"", src: [6, 8], d: "Segundo o Sesc, a coletânea destacou os Racionais MC's, apresentados ao público com essa música. A Red Bull Brasil situa o lançamento em 1989, um ano depois de Hip-Hop Cultura de Rua." },
+        { t: "Sharylaine, uma pioneira", src: [6], d: "Sharylaine participou desde o início das rodas de breaking na São Bento e nunca se ausentou do hip-hop. Seu álbum solo se concretizou após 40 anos, com recursos próprios — um exemplo de como o reconhecimento das pioneiras demorou a chegar." }
+      ],
+      src: [6, 8]
+    },
+    {
+      id: "1990", label: "1990", decade: "1990", phase: 0, scene: "boombox", accent: "#7cff6b",
+      alt: "Ilustração de um rádio portátil com dois alto-falantes",
+      title: "Referências que elevam a autoestima",
+      summary: "Rappin' Hood conta que o álbum Fear of a Black Planet, do Public Enemy (1990), mudou sua postura diante do mundo: a militância do grupo ajudou jovens negros de vários países a ganhar autoestima e a enxergar seu potencial. No Brasil, ele cita os discos de Thaíde, DJ Hum e Racionais MC's como quem fez isso por ele.",
+      hl: [
+        ["protagonismo", "O rap funcionou, na fala de um de seus artistas, como espelho de orgulho e potência para jovens negros."]
+      ],
+      facts: [
+        { t: "O relato de Rappin' Hood", src: [8], d: "Em depoimento à Red Bull Brasil, o rapper descreve o disco do Public Enemy como histórico e afirma que a militância do grupo foi uma grande afirmação na época. É um testemunho pessoal, que ilustra como o rap circulava entre jovens negros dentro e fora do Brasil." }
+      ],
+      src: [8]
+    },
+    {
+      id: "2003", label: "2003", decade: "2000", phase: 1, scene: "mic", accent: "#ff3d81",
+      alt: "Ilustração de um microfone com ondas sonoras",
+      title: "Batalha do Real e Liga dos MCs",
+      summary: "Em 2003, na Lapa, no Rio de Janeiro, o coletivo Brutal Crew, de Aori, criou a Batalha do Real, considerada pela Billboard Brasil a primeira batalha de rimas do país, com inscrição de R$ 1. No mesmo ano nasceu a Liga dos MCs, desdobramento nacional da Batalha do Real: o começo de um circuito competitivo de freestyle.",
+      hl: [
+        ["valorizacao", "A Batalha do Real virou rito de passagem: o MC iniciante testa as rimas e é testado pelo público."]
+      ],
+      facts: [
+        { t: "Um começo modesto", src: [18, 19], d: "As duas fontes concordam: a inscrição custava R$ 1 e o dinheiro arrecadado ia para o vencedor. Elas divergem sobre o local da primeira edição. A Billboard Brasil fala em uma praça da Lapa, com plateia de quatro pessoas e um cachorro; a Pitaya Cultural cita a sinuca do número 73 da Rua Riachuelo, com 16 participantes." },
+        { t: "Liga dos MCs (2003)", src: [21, 19], d: "A Liga dos MCs foi criada em 2003 pela Brutal Crew e foi uma das principais competições de freestyle do país. A primeira final aconteceu em 2003. Algumas matérias situam a origem da Liga em Belo Horizonte, mas os materiais consultados que detalham a Brutal Crew a ligam à Lapa, no Rio; usamos essa versão. Não confunda com a Liga Central de MCs, criada em 2026." },
+        { t: "Nomes revelados", src: [20, 19], d: "O Acervo Bocada Forte lista Emicida, Marechal, Filipe Ret e Maomé, da Cone Crew Diretoria, entre os nomes revelados pela Batalha do Real; a Pitaya Cultural também cita Emicida como um dos que despontaram na Liga dos MCs." },
+        { t: "Cultura afro-brasileira na escola", src: [37], d: "Também em 2003 foi sancionada a Lei nº 10.639, que instituiu a obrigatoriedade do ensino de História e Cultura Afro-brasileira na educação básica: um marco do debate sobre reconhecimento da contribuição negra no país." }
+      ],
+      src: [18, 19, 20, 21, 37, 38]
+    },
+    {
+      id: "2007", label: "2007", decade: "2000", phase: 1, scene: "viaduto", accent: "#22d3ee",
+      alt: "Ilustração de um viaduto com arcos",
+      title: "As batalhas se espalham: BH e São Paulo",
+      summary: "Em 2007, a Família de Rua criou o Duelo de MCs, no Viaduto Santa Tereza, em Belo Horizonte, que virou um dos grandes palcos do freestyle nacional. Por volta do mesmo período, o MC Mamuti situa o primeiro \"estouro\" de batalhas em São Paulo.",
+      hl: [],
+      facts: [
+        { t: "Duelo de MCs", src: [22], d: "O Duelo de MCs foi criado em 2007 pela Família de Rua e acontece no Viaduto Santa Tereza, em Belo Horizonte (MG). Hoje reúne, na final nacional, os melhores MCs de cada estado." },
+        { t: "Do repente ao rap", src: [23], d: "Mamuti conta que estudou a história das batalhas e do improviso no Brasil, passando por repente, cururu e embolada. Ele começou a rimar em 2007, depois do primeiro \"estouro\" de batalhas em São Paulo." },
+        { t: "Áudio em MP3", src: [23], d: "Segundo Mamuti, na época em que ele começou a batalhar o público gravava o áudio das batalhas em aparelhos MP3 e compartilhava: antes do vídeo, a circulação era feita de forma caseira." }
+      ],
+      src: [22, 23]
+    },
+    {
+      id: "2012", label: "2012", decade: "2010", phase: 2, scene: "stage", accent: "#ffd23f",
+      alt: "Ilustração de um palco com holofotes e plateia",
+      title: "O primeiro Duelo Nacional",
+      summary: "Em 26 de agosto de 2012 aconteceu a primeira edição do Duelo de MCs Nacional, em Belo Horizonte, com oito MCs de sete estados. Douglas Din (MG) foi o campeão. A Liga dos MCs, que já tinha sido o maior evento do país, deixou de ser regular em 2010 e teve uma edição especial de 10 anos em 2013.",
+      hl: [
+        ["representatividade", "Mirapotira, da Bahia, foi a primeira mulher a participar do Duelo Nacional."]
+      ],
+      facts: [
+        { t: "Como era a disputa", src: [22], d: "Cada MC tinha 45 segundos para atacar e 45 para responder, em dois rounds. Votavam dois jurados e a plateia. A edição teve show de Emicida." },
+        { t: "Norte no Nacional", src: [22], d: "Em 2013, Rog, do Pará, foi a primeira pessoa da região Norte a participar do Duelo Nacional. Douglas Din foi bicampeão nesse ano." },
+        { t: "Fim de um ciclo", src: [22, 21], d: "Segundo o verbete do Duelo de MCs, a Liga dos MCs acabou em 2010, mas em 2013 houve uma última edição especial, comemorando os 10 anos, vencida pelo paulista Kauan. As fontes divergem sobre o ano exato em que o Duelo passou a ocupar o lugar de maior competição nacional." }
+      ],
+      src: [21, 22]
+    },
+    {
+      id: "2014", label: "2014", decade: "2010", phase: 2, scene: "podium", accent: "#ff7a1a",
+      alt: "Ilustração de um pódio com três degraus",
+      title: "Um nordestino campeão e o desafio de manter o evento",
+      summary: "Em novembro de 2014, o baiano Larício venceu o Duelo Nacional e se tornou o primeiro nordestino campeão. Naquele ano o evento quase não aconteceu por falta de patrocínio e por uma obra que fechou o Viaduto Santa Tereza; a Família de Rua conseguiu levantar R$ 32 mil para realizá-lo.",
+      hl: [
+        ["representatividade", "Larício, da Bahia, foi o primeiro nordestino a vencer o Duelo Nacional."],
+        ["valorizacao", "A dificuldade de financiar o evento mostra como a cena dependia de esforço coletivo e de pouco apoio."]
+      ],
+      facts: [
+        { t: "A final de 2014", src: [22], d: "Larício venceu o mineiro Capanga na final, em 23 de novembro de 2014. Foi a terceira edição do Duelo Nacional, com oito MCs de oito estados." },
+        { t: "Sem patrocínio", src: [22], d: "Por falta de patrocinadores e por causa de uma obra que fechou o Viaduto Santa Tereza, o Duelo de 2014 quase não aconteceu. Com muito esforço, a Família de Rua levantou 32 mil reais." }
+      ],
+      src: [22]
+    },
+    {
+      id: "2016", label: "2016", decade: "2010", phase: 2, scene: "phone", accent: "#a78bfa",
+      alt: "Ilustração de um celular exibindo um vídeo com botão de play",
+      title: "A internet muda a escala: Batalha da Aldeia",
+      summary: "Em 2016, jovens de Barueri (SP) começaram uma roda de rima semanal na Praça dos Estudantes: nascia a Batalha da Aldeia. Em menos de um mês veio a ideia de filmar e publicar no YouTube. Segundo Bob 13, um dos fundadores, nem a tradicional Batalha do Santa Cruz tinha presença nas redes.",
+      hl: [],
+      facts: [
+        { t: "Uma brincadeira de praça", src: [24, 25], d: "A Câmara Municipal de Barueri registra que oito jovens se reuniram em 2016 na Praça dos Estudantes para organizar uma roda de rima. Os fundadores são Bob 13 e Giovani (GZ)." },
+        { t: "A ideia do YouTube", src: [25], d: "Em menos de um mês, um dos participantes, Lucas Matheus (Lucão), sugeriu criar um canal para divulgar os MCs e a organização. Bob 13 conta que perceberam que nem a Batalha do Santa Cruz tinha representatividade nas redes." },
+        { t: "O Nacional chega a mais estados", src: [22], d: "Em 2016, Acre e Rio Grande do Sul participaram pela primeira vez do Duelo Nacional, e o gaúcho Nícolas Walter foi o primeiro competidor da região Sul." }
+      ],
+      src: [22, 24, 25]
+    },
+    {
+      id: "2018", label: "2018", decade: "2010", phase: 3, scene: "network", accent: "#22d3ee",
+      alt: "Ilustração de pontos conectados formando uma rede",
+      title: "Organizando o país das rimas",
+      summary: "Em 2017, o Duelo Nacional teve 15 MCs e estreias de cinco estados. Em 2018, um novo sistema de classificação dividiu o país em regiões e levou 16 MCs à final, com seletivas em rodas culturais de todo o Brasil. A cena ganhava caminhos claros de classificação, mas também polêmicas.",
+      hl: [
+        ["representatividade", "Em 2018, MCs do Amapá, do Ceará, de Goiás e de Santa Catarina participaram pela primeira vez do Nacional."]
+      ],
+      facts: [
+        { t: "Pré-seletiva, seletiva e grupos", src: [22], d: "Cada região de cada estado faz uma pré-seletiva, seguida das seletivas estaduais e das eliminatórias de grupos (Sudeste, Sul, Centro-Oeste, Nordeste e Norte). O campeão e o vice de cada região vão ao Nacional. Até 2017 bastava vencer a pré-seletiva e a seletiva estadual." },
+        { t: "Nem todos gostaram", src: [22], d: "O verbete do Duelo de MCs registra que a mudança foi polêmica: estados tradicionais da competição, como São Paulo, Espírito Santo e Distrito Federal, ficaram de fora em 2018, embora o novo formato tenha aberto espaço para estreias." }
+      ],
+      src: [22]
+    },
+    {
+      id: "2020", label: "2020", decade: "2020", phase: 3, scene: "phone", accent: "#ff3d81",
+      alt: "Ilustração de um celular com transmissão ao vivo",
+      title: "Pandemia: a roda vai para a tela",
+      summary: "Com a pandemia de covid-19, os encontros semanais da Batalha da Aldeia passaram para o ambiente virtual; em junho de 2020 o canal ultrapassou 3 milhões de inscritos. O Duelo Nacional de 2020 foi adiado para novembro de 2021 e teve 32 MCs, o dobro do formato anterior.",
+      hl: [],
+      facts: [
+        { t: "Batalhas online", src: [24, 26], d: "A Câmara de Barueri conta que, com a pandemia, os encontros semanais migraram para o virtual. A Rapdab registrou em junho de 2020 que a Batalha da Aldeia passou dos 3 milhões de inscritos no YouTube; em 2021 o canal já somava mais de 3,5 milhões." },
+        { t: "Nacional 2020, disputado em 2021", src: [22], d: "A final aconteceu em 21 de novembro de 2021, com 32 participantes. Alves, do Distrito Federal, venceu Vinícius ZN, de Pernambuco. Quatro estados estrearam: Paraíba, Piauí, Rondônia e Sergipe." },
+        { t: "Batalha e grandes eventos", src: [26], d: "Já em 2019, segundo a Rapdab, a Batalha da Aldeia se apresentou nos intervalos de edições do Future MMA, principal evento de MMA do país, e o CEO da organização de lutas se tornou sócio da BDA." }
+      ],
+      src: [22, 24, 26]
+    },
+    {
+      id: "2022", label: "2022", decade: "2020", phase: 3, scene: "network", accent: "#7cff6b", nodes: 26,
+      alt: "Ilustração de uma rede densa de pontos conectados",
+      title: "Todos os estados representados",
+      summary: "Em 3 de dezembro de 2022, a 10ª edição do Duelo Nacional foi a primeira com pelo menos um MC de cada estado do país, em 32 vagas. Pela primeira vez, dois paulistas — Big Mike e Youngui — disputaram a final, e Big Mike foi o campeão.",
+      hl: [
+        ["representatividade", "O Nacional passou a ter representantes de todos os estados do Brasil."]
+      ],
+      facts: [
+        { t: "32 vagas", src: [22], d: "Além de um MC por estado, cinco vagas vinham de uma repescagem. A votação também mudou: passou de três para cinco votos, sendo um da plateia e quatro de jurados." }
+      ],
+      src: [22]
+    },
+    {
+      id: "2023", label: "2023", decade: "2020", phase: 4, scene: "stage", accent: "#b794ff",
+      alt: "Ilustração de um palco com holofotes e plateia",
+      title: "Kaemy campeã; MCs entram na indústria musical",
+      summary: "Em dezembro de 2023, Kaemy, de Goiás, venceu o Duelo Nacional e se tornou a primeira mulher campeã do evento. No mesmo mês, o gaúcho Xamuel, que começou a rimar na escola e se projetou pelas redes sociais, assinou contrato com a Universal Music.",
+      hl: [
+        ["representatividade", "Kaemy é a primeira mulher campeã do Duelo Nacional."],
+        ["valorizacao", "O contrato de Xamuel com uma grande gravadora mostra a batalha como porta de entrada para a carreira artística."]
+      ],
+      facts: [
+        { t: "A final de Kaemy", src: [22], d: "Kaemy venceu o carioca Neo por 2 a 0 na final. Em 2012, Mirapotira já havia sido a primeira mulher a participar do Nacional; só em 2023 uma mulher chegou ao título." },
+        { t: "Xamuel", src: [18], d: "A Billboard Brasil conta que Rick Samuel, o Xamuel, começou a rimar na escola aos 8 anos, em Viamão (RS), e que, graças às redes sociais, descobriu que poderia viver das batalhas. Em dezembro de 2023 assinou com a Universal Music." },
+        { t: "Reconhecimento institucional", src: [24], d: "Em 2021, a Câmara Municipal de Barueri noticiou um projeto de lei para incluir a Batalha da Aldeia no calendário oficial da cidade, com o objetivo de divulgar a cultura hip-hop e incentivar o senso crítico entre os jovens." }
+      ],
+      src: [18, 22, 24]
+    },
+    {
+      id: "2024", label: "2024", decade: "2020", phase: 4, scene: "podium", accent: "#ffd23f",
+      alt: "Ilustração de um pódio com três degraus",
+      title: "Ligas, grandes prêmios e transmissões",
+      summary: "Em 2024, a FMS Brasil, primeira liga profissional da Urban Roosters fora do mundo hispânico, estreou no país. A Batalha da Aldeia fez 8 anos com um torneio de trios que premiou com R$ 100 mil, ingressos esgotados e transmissão pelo PodPah. O Red Bull FrancaMente também coroou Big Mike.",
+      hl: [
+        ["valorizacao", "Prêmios de R$ 100 mil, ligas e transmissões mostram a batalha como atividade artística com público e patrocínio."]
+      ],
+      facts: [
+        { t: "FMS Brasil", src: [29, 30], d: "Segundo a Wikipédia, em 2024 começou a FMS Brasil, a primeira liga de língua não espanhola da Urban Roosters. O El Planteo conta que a primeira edição reuniu 12 freestylers do país em cinco jornadas, começando no Espírito Santo." },
+        { t: "Batalha da Aldeia, 8 anos", src: [27, 28], d: "O Metrópoles informa que 30 MCs, em 10 trios, disputaram o prêmio de R$ 100 mil, com 5 mil ingressos esgotados e o canal com mais de 4,6 milhões de inscritos. A BDA também tem podcast e gravadora, segundo o Terra. O Metrópoles a chama de maior organização de competições de rimas da América Latina." },
+        { t: "Sem uma associação central", src: [35], d: "Em entrevista de 2024, o entrevistado Marcus Perez afirmou que não existe associação organizadora que centralize regras ou a criação de batalhas: cada evento define as suas. É o cenário em que iniciativas de ranking e liga passam a ser discutidas." }
+      ],
+      src: [27, 28, 29, 30, 31, 35]
+    },
+    {
+      id: "2026", label: "2026", decade: "2020", phase: 5, scene: "ranking", accent: "#ff3d81", liga: true,
+      alt: "Ilustração de um ranking com barras de pontuação",
+      title: "Liga Central de MCs e a era das transmissões",
+      summary: "Em 2026, a Liga Central de MCs foi apresentada por Jotapê com a proposta de reunir batalhas de todo o Brasil num ranking único e pagar prêmios aos MCs. No fim de agosto, a Batalha da Aldeia fez 10 anos no Vale do Anhangabaú, em São Paulo, com 48 MCs e, segundo o Rap Mídia, 516 mil espectadores simultâneos.",
+      hl: [
+        ["valorizacao", "A Liga Central quer que MCs que geram milhões de visualizações passem a ser pagos de forma proporcional ao impacto cultural que criam."]
+      ],
+      facts: [
+        { t: "Como a Liga Central funciona", src: [32], d: "Batalhas de todo o país se filiam e cada vitória de um MC gera pontos. O ranking semanal é atualizado aos domingos e existe um ranking anual. Segundo o site oficial, o líder semanal recebe R$ 250 e o líder anual, R$ 10 mil. A Copa Central de Freestyle, um mata-mata entre os 16 mais bem classificados, está marcada para 12/12 em São Paulo." },
+        { t: "Por que isso importa", src: [32, 34], d: "O objetivo declarado é profissionalizar o freestyle, dar visibilidade aos MCs e criar um ecossistema competitivo justo e transparente. Para o Duds MDB, o projeto quer mudar a lógica de MCs que movimentam milhões de visualizações e lotam eventos, mas muitas vezes seguem sem remuneração proporcional." },
+        { t: "BDA 10 anos", src: [36], d: "Segundo o Rap Mídia, a Batalha da Aldeia nasceu numa roda de rima em Barueri, em março de 2016, e dez anos depois ocupou o Vale do Anhangabaú com 48 MCs, em 29 de agosto de 2026. Os 516 mil espectadores simultâneos vêm dessa única fonte." },
+        { t: "Cuidado com o nome", src: [21, 32], d: "A Liga dos MCs (2003, Brutal Crew) e a Liga Central de MCs (2026, Jotapê) são iniciativas diferentes. A Liga Central é muito recente e as informações vêm principalmente do próprio site e de uma reportagem de abril de 2026, então é cedo para avaliar seus resultados." }
+      ],
+      src: [21, 32, 33, 34, 36]
+    }
+  ];
+
+  var DESTAQUES = [
+    { k: "Cultura negra", to: "raizes", t: "Oralidade, canto em desafio, capoeira e coco carregam marcas africanas e afro-brasileiras. Pesquisadores aproximam os MCs dos griots da África Ocidental — uma leitura de estudo, não uma linha reta de origem.", src: [12, 13, 16] },
+    { k: "Hip-hop", to: "1980", t: "Cultura de rua nascida no Bronx nos anos 1970. No Brasil, se firma em São Paulo nos anos 1980, na rua 24 de Maio e na estação São Bento.", src: [5, 6, 7] },
+    { k: "Periferia", to: "2016", t: "Jovens periféricos ocuparam o centro de São Paulo. As batalhas ocupam praças, viadutos e passarelas: a Batalha da Aldeia começou numa praça de Barueri, e a Batalha da Leste acontece na passarela entre o terminal Itaquera e o estádio.", src: [24, 39] },
+    { k: "Resistência", to: "1983", t: "De Palmares aos jovens perseguidos por fazerem rap nos anos 1980: criar e ocupar a rua sempre teve um lado de enfrentamento.", src: [3, 7, 10] },
+    { k: "Representatividade", to: "2023", t: "Sharylaine (1989), Mirapotira (2012), Larício, primeiro nordestino campeão (2014), e Kaemy, primeira mulher campeã (2023).", src: [6, 22] },
+    { k: "Profissionalização", to: "2024", t: "Prêmios de R$ 100 mil, ligas como a FMS Brasil, contratos com gravadoras e transmissões para centenas de milhares de pessoas.", src: [18, 27, 29, 36] },
+    { k: "Valorização dos MCs", to: "2026", t: "Da inscrição de R$ 1 na Batalha do Real (2003) aos prêmios semanais e anuais propostos pela Liga Central de MCs (2026).", src: [19, 32] }
+  ];
+
+  var STATS = [
+    { n: "4,6 mi", l: "inscritos no YouTube da Batalha da Aldeia (2024)", src: [27] },
+    { n: "516 mil", l: "espectadores simultâneos na BDA 10 anos (ago/2026, fonte única)", src: [36] },
+    { n: "32", l: "vagas no Duelo Nacional, com todos os estados representados (2022)", src: [22] },
+    { n: "R$ 100 mil", l: "prêmio do torneio de trios da BDA (2024)", src: [27, 28] },
+    { n: "R$ 10 mil", l: "prêmio anual anunciado pela Liga Central (site oficial)", src: [32] }
+  ];
+
+  return { SOURCES: SOURCES, PHASES: PHASES, DECADES: DECADES, HIGHLIGHTS: HIGHLIGHTS, EVENTS: EVENTS, DESTAQUES: DESTAQUES, STATS: STATS };
+})();
+
+</script>
+  <script>
+/* Ilustrações abstratas em SVG, uma por período da linha do tempo.
+   Usam as variáveis CSS --accent (cor do período) e --ink-dim. */
+window.BR_SCENES = (function () {
+  "use strict";
+
+  var A = "var(--accent)";
+  var D = "var(--ink-dim)";
+  var S = "var(--surface-2)";
+
+  function svg(inner) {
+    return '<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" focusable="false" aria-hidden="true">' + inner + "</svg>";
+  }
+
+  function roda() {
+    var dots = "";
+    for (var i = 0; i < 14; i++) {
+      var a = (i / 14) * Math.PI * 2;
+      var x = 200 + Math.cos(a) * 100;
+      var y = 150 + Math.sin(a) * 100;
+      dots += '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="' + (i % 2 ? 9 : 12) + '" fill="' + (i % 3 === 0 ? A : D) + '"/>';
+    }
+    return svg(
+      '<g fill="none" stroke="' + A + '" stroke-width="3"><circle cx="200" cy="150" r="44"/><circle cx="200" cy="150" r="64" stroke-dasharray="3 9" opacity=".6"/><circle cx="200" cy="150" r="128" stroke-dasharray="2 14" opacity=".35"/></g>' +
+      dots +
+      '<path d="M182 138h36M182 150h36M182 162h36" stroke="' + A + '" stroke-width="4" stroke-linecap="round"/>'
+    );
+  }
+
+  function serra() {
+    return svg(
+      '<circle cx="290" cy="90" r="38" fill="' + A + '"/>' +
+      '<polygon points="0,300 80,160 150,240 250,110 340,220 400,170 400,300" fill="' + S + '" stroke="' + D + '" stroke-width="2"/>' +
+      '<polygon points="0,300 120,210 200,260 300,190 400,260 400,300" fill="none" stroke="' + A + '" stroke-width="3"/>' +
+      '<g fill="' + D + '"><circle cx="60" cy="50" r="2"/><circle cx="120" cy="90" r="2"/><circle cx="180" cy="40" r="2"/><circle cx="350" cy="40" r="2"/></g>'
+    );
+  }
+
+  function bronx() {
+    var b = "";
+    var xs = [10, 70, 130, 190, 250, 310];
+    var hs = [130, 190, 100, 160, 210, 120];
+    for (var i = 0; i < xs.length; i++) {
+      b += '<rect x="' + xs[i] + '" y="' + (300 - hs[i]) + '" width="54" height="' + hs[i] + '" fill="' + S + '" stroke="' + D + '" stroke-width="2"/>';
+      for (var r = 0; r < Math.floor(hs[i] / 30); r++) {
+        b += '<rect x="' + (xs[i] + 10) + '" y="' + (300 - hs[i] + 12 + r * 30) + '" width="8" height="12" fill="' + ((i + r) % 3 === 0 ? A : D) + '" opacity="' + ((i + r) % 3 === 0 ? 1 : 0.35) + '"/>';
+        b += '<rect x="' + (xs[i] + 32) + '" y="' + (300 - hs[i] + 12 + r * 30) + '" width="8" height="12" fill="' + ((i * r) % 2 === 0 ? A : D) + '" opacity="' + ((i * r) % 2 === 0 ? 1 : 0.35) + '"/>';
+      }
+    }
+    return svg('<circle cx="340" cy="60" r="26" fill="' + A + '"/>' + b);
+  }
+
+  function street() {
+    return svg(
+      '<g transform="rotate(-8 200 170)"><rect x="90" y="120" width="220" height="120" fill="' + S + '" stroke="' + D + '" stroke-width="2"/></g>' +
+      '<g fill="none" stroke="' + A + '" stroke-width="5" stroke-linecap="round"><path d="M120 110a80 80 0 0 1 160 0"/><path d="M150 100a50 50 0 0 1 100 0" opacity=".7"/><path d="M280 60l20 10-20 10"/></g>' +
+      '<circle cx="200" cy="170" r="16" fill="' + A + '"/>' +
+      '<path d="M200 186l-24 40M200 186l30 34M182 172l-40 10M218 172l40-14" stroke="' + D + '" stroke-width="6" stroke-linecap="round" fill="none"/>'
+    );
+  }
+
+  function metro() {
+    var arcs = "";
+    for (var i = 0; i < 5; i++) {
+      var w = 40 + i * 32;
+      arcs += '<path d="M' + (200 - w) + " 300V" + (150 - i * 8) + "a" + w + " " + w + ' 0 0 1 ' + (w * 2) + ' 0V300" fill="none" stroke="' + (i === 0 ? A : D) + '" stroke-width="3" opacity="' + (1 - i * 0.15) + '"/>';
+    }
+    return svg(
+      arcs +
+      '<g stroke="' + D + '" stroke-width="3"><path d="M178 300L196 170M222 300L204 170"/></g>' +
+      '<g stroke="' + D + '" stroke-width="2" opacity=".6"><path d="M172 280h56M180 250h40M185 225h30M189 205h22"/></g>' +
+      '<circle cx="200" cy="160" r="8" fill="' + A + '"/><circle cx="200" cy="160" r="22" fill="' + A + '" opacity=".25"/>'
+    );
+  }
+
+  function vinyl() {
+    return svg(
+      '<circle cx="200" cy="150" r="118" fill="' + S + '" stroke="' + D + '" stroke-width="2"/>' +
+      '<g fill="none" stroke="' + D + '" opacity=".5"><circle cx="200" cy="150" r="100"/><circle cx="200" cy="150" r="86"/><circle cx="200" cy="150" r="72"/></g>' +
+      '<circle cx="200" cy="150" r="42" fill="' + A + '"/><circle cx="200" cy="150" r="6" fill="var(--bg)"/>' +
+      '<path d="M340 30L262 140" stroke="' + D + '" stroke-width="6" stroke-linecap="round"/><circle cx="340" cy="30" r="10" fill="' + D + '"/>'
+    );
+  }
+
+  function sleeve() {
+    return svg(
+      '<rect x="90" y="30" width="220" height="240" fill="' + S + '" stroke="' + A + '" stroke-width="4"/>' +
+      '<rect x="110" y="50" width="180" height="90" fill="' + A + '" opacity=".9"/>' +
+      '<text x="200" y="185" text-anchor="middle" font-family="var(--font-display)" font-size="30" fill="var(--ink)" letter-spacing="1">CONSCIÊNCIA</text>' +
+      '<text x="200" y="220" text-anchor="middle" font-family="var(--font-display)" font-size="30" fill="' + A + '" letter-spacing="1">BLACK</text>' +
+      '<text x="200" y="250" text-anchor="middle" font-family="var(--font-body)" font-size="14" fill="' + D + '">Vol. 1 · 1989</text>' +
+      '<circle cx="200" cy="95" r="26" fill="var(--bg)"/><circle cx="200" cy="95" r="6" fill="' + A + '"/>'
+    );
+  }
+
+  function boombox() {
+    return svg(
+      '<path d="M130 70a70 40 0 0 1 140 0" fill="none" stroke="' + D + '" stroke-width="8" stroke-linecap="round"/>' +
+      '<rect x="50" y="90" width="300" height="150" rx="14" fill="' + S + '" stroke="' + D + '" stroke-width="3"/>' +
+      '<circle cx="120" cy="165" r="46" fill="none" stroke="' + A + '" stroke-width="4"/><circle cx="120" cy="165" r="26" fill="' + A + '" opacity=".85"/>' +
+      '<circle cx="280" cy="165" r="46" fill="none" stroke="' + A + '" stroke-width="4"/><circle cx="280" cy="165" r="26" fill="' + A + '" opacity=".85"/>' +
+      '<rect x="168" y="118" width="64" height="26" rx="4" fill="none" stroke="' + D + '" stroke-width="2"/>' +
+      '<g stroke="' + D + '" stroke-width="4" stroke-linecap="round"><path d="M176 180h48M176 198h48"/></g>'
+    );
+  }
+
+  function mic() {
+    var w = "";
+    for (var i = 1; i <= 3; i++) {
+      w += '<path d="M' + (255 + i * 20) + " " + (90 - i * 14) + "a" + (30 + i * 16) + " " + (30 + i * 16) + ' 0 0 1 0 ' + (60 + i * 28) + '" fill="none" stroke="' + A + '" stroke-width="4" stroke-linecap="round" opacity="' + (1 - i * 0.22) + '"/>';
+    }
+    return svg(
+      '<rect x="160" y="30" width="80" height="130" rx="40" fill="' + S + '" stroke="' + A + '" stroke-width="4"/>' +
+      '<g stroke="' + D + '" stroke-width="2" opacity=".7"><path d="M160 70h80M160 90h80M160 110h80M200 30v130"/></g>' +
+      '<path d="M130 120a70 70 0 0 0 140 0M200 190v60M150 250h100" fill="none" stroke="' + D + '" stroke-width="6" stroke-linecap="round"/>' +
+      w
+    );
+  }
+
+  function viaduto() {
+    var arcs = "";
+    for (var i = 0; i < 4; i++) {
+      var x = 20 + i * 92;
+      arcs += '<path d="M' + x + " 250V190a46 46 0 0 1 92 0V250" + '" fill="none" stroke="' + (i % 2 ? D : A) + '" stroke-width="4"/>';
+    }
+    return svg(
+      '<rect x="0" y="120" width="400" height="24" fill="' + S + '" stroke="' + D + '" stroke-width="2"/>' +
+      arcs +
+      '<path d="M0 250h400" stroke="' + D + '" stroke-width="4"/>' +
+      '<g fill="' + A + '"><circle cx="70" cy="100" r="5"/><circle cx="200" cy="96" r="5"/><circle cx="320" cy="100" r="5"/></g>' +
+      '<path d="M60 100h-14M200 96h-14M320 100h-14" stroke="' + D + '" stroke-width="3"/>'
+    );
+  }
+
+  function stage() {
+    var heads = "";
+    for (var i = 0; i < 12; i++) {
+      heads += '<circle cx="' + (24 + i * 32) + '" cy="' + (272 - (i % 3) * 6) + '" r="14" fill="' + S + '" stroke="' + D + '" stroke-width="2"/>';
+    }
+    return svg(
+      '<g fill="' + A + '" opacity=".22"><polygon points="110,0 150,0 220,210 60,210"/><polygon points="250,0 290,0 340,210 180,210"/></g>' +
+      '<rect x="40" y="200" width="320" height="18" fill="' + S + '" stroke="' + A + '" stroke-width="3"/>' +
+      '<circle cx="130" cy="30" r="12" fill="' + A + '"/><circle cx="270" cy="30" r="12" fill="' + A + '"/>' +
+      '<path d="M200 200v-64M182 134h36" stroke="' + D + '" stroke-width="6" stroke-linecap="round"/>' +
+      heads
+    );
+  }
+
+  function podium() {
+    return svg(
+      '<rect x="60" y="150" width="90" height="120" fill="' + S + '" stroke="' + D + '" stroke-width="3"/>' +
+      '<rect x="155" y="100" width="90" height="170" fill="' + A + '" opacity=".9"/>' +
+      '<rect x="250" y="180" width="90" height="90" fill="' + S + '" stroke="' + D + '" stroke-width="3"/>' +
+      '<g font-family="var(--font-display)" font-size="44" text-anchor="middle"><text x="105" y="215" fill="' + D + '">2</text><text x="200" y="175" fill="var(--bg)">1</text><text x="295" y="235" fill="' + D + '">3</text></g>' +
+      '<polygon points="200,40 208,64 234,64 213,79 221,104 200,89 179,104 187,79 166,64 192,64" fill="' + A + '"/>'
+    );
+  }
+
+  function phone() {
+    return svg(
+      '<rect x="130" y="20" width="140" height="260" rx="22" fill="' + S + '" stroke="' + D + '" stroke-width="4"/>' +
+      '<rect x="146" y="52" width="108" height="72" rx="8" fill="var(--bg)" stroke="' + A + '" stroke-width="3"/>' +
+      '<polygon points="188,74 188,102 214,88" fill="' + A + '"/>' +
+      '<rect x="146" y="136" width="70" height="8" rx="4" fill="' + D + '" opacity=".7"/><rect x="146" y="154" width="100" height="8" rx="4" fill="' + D + '" opacity=".4"/>' +
+      '<rect x="146" y="174" width="44" height="18" rx="9" fill="' + A + '"/>' +
+      '<g fill="' + A + '" opacity=".8"><circle cx="300" cy="90" r="6"/><circle cx="322" cy="66" r="4"/><circle cx="90" cy="120" r="5"/><circle cx="72" cy="150" r="3"/></g>' +
+      '<g fill="none" stroke="' + A + '" stroke-width="3" stroke-linecap="round" opacity=".6"><path d="M286 130a30 30 0 0 1 0 40M302 118a50 50 0 0 1 0 64"/></g>'
+    );
+  }
+
+  function network(n) {
+    var pts = [];
+    var count = n || 14;
+    for (var i = 0; i < count; i++) {
+      var x = 30 + ((i * 97) % 340);
+      var y = 30 + ((i * 61 + (i % 3) * 40) % 240);
+      pts.push([x, y]);
+    }
+    var lines = "";
+    var dots = "";
+    for (var a = 0; a < pts.length; a++) {
+      var b = (a * 5 + 3) % pts.length;
+      var c = (a + 1) % pts.length;
+      lines += '<line x1="' + pts[a][0] + '" y1="' + pts[a][1] + '" x2="' + pts[b][0] + '" y2="' + pts[b][1] + '"/>';
+      lines += '<line x1="' + pts[a][0] + '" y1="' + pts[a][1] + '" x2="' + pts[c][0] + '" y2="' + pts[c][1] + '"/>';
+      dots += '<circle cx="' + pts[a][0] + '" cy="' + pts[a][1] + '" r="' + (a % 4 === 0 ? 9 : 5) + '" fill="' + (a % 4 === 0 ? A : D) + '"/>';
+    }
+    return svg('<g stroke="' + D + '" stroke-width="1.5" opacity=".55">' + lines + "</g>" + dots);
+  }
+
+  function ranking() {
+    var rows = "";
+    var w = [270, 230, 200, 160, 120, 90];
+    for (var i = 0; i < w.length; i++) {
+      var y = 40 + i * 42;
+      rows +=
+        '<text x="30" y="' + (y + 22) + '" font-family="var(--font-display)" font-size="24" fill="' + (i === 0 ? A : D) + '">' + (i + 1) + "</text>" +
+        '<rect x="66" y="' + y + '" width="' + w[i] + '" height="28" rx="4" fill="' + (i === 0 ? A : S) + '" stroke="' + (i === 0 ? A : D) + '" stroke-width="2"/>';
+    }
+    return svg(rows + '<text x="368" y="60" text-anchor="end" font-family="var(--font-display)" font-size="22" fill="' + A + '">R$</text>');
+  }
+
+  var map = { roda: roda, serra: serra, bronx: bronx, street: street, metro: metro, vinyl: vinyl, sleeve: sleeve, boombox: boombox, mic: mic, viaduto: viaduto, stage: stage, podium: podium, phone: phone, network: network, ranking: ranking };
+
+  return {
+    render: function (name, opts) {
+      var fn = map[name] || roda;
+      return fn(opts && opts.nodes);
+    }
+  };
+})();
+
+</script>
+  <script>
+/* Lógica da página: linha do tempo interativa, diálogo com detalhes, destaques e fontes.
+   Sem dependências externas. Os dados ficam em data.js e as ilustrações em scenes.js. */
+(function () {
+  "use strict";
+
+  var D = window.BR_DATA;
+  var SC = window.BR_SCENES;
+  var EV = D.EVENTS;
+  var N = EV.length;
+
+  var reduce = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var cur = -1;
+  var swapTimer = null;
+  var playTimer = null;
+
+  function $(sel, root) { return (root || document).querySelector(sel); }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  function paragraphs(text) {
+    var frag = document.createDocumentFragment();
+    String(text).split("\n\n").forEach(function (t) { frag.appendChild(el("p", null, t)); });
+    return frag;
+  }
+
+  /* ---------- Fontes ---------- */
+  function chips(list) {
+    var wrap = document.createDocumentFragment();
+    wrap.appendChild(document.createTextNode("Fontes: "));
+    list.forEach(function (n, i) {
+      var s = D.SOURCES[n - 1];
+      var a = el("a", "chip", "[" + n + "]");
+      a.href = "#fonte-" + n;
+      a.title = s.t;
+      a.setAttribute("aria-label", "Fonte " + n + ": " + s.t);
+      wrap.appendChild(a);
+      if (i < list.length - 1) wrap.appendChild(document.createTextNode(" "));
+    });
+    return wrap;
+  }
+  function fillSrcLine(node, list) {
+    node.textContent = "";
+    if (list && list.length) node.appendChild(chips(list));
+  }
+
+  function buildSources() {
+    var ol = $("#sources");
+    D.SOURCES.forEach(function (s, i) {
+      var li = el("li");
+      li.id = "fonte-" + (i + 1);
+      var a = el("a", null, s.t);
+      a.href = s.u;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      li.appendChild(a);
+      li.appendChild(el("span", "src-org", " " + s.o));
+      ol.appendChild(li);
+    });
+  }
+
+  /* ---------- Linha do tempo: montagem ---------- */
+  var stage = $("#stage");
+  var track = $("#track");
+  var slider = $("#slider");
+  var tlSection = $("#linha-do-tempo");
+
+  function buildPhases() {
+    var ol = $("#phases");
+    D.PHASES.forEach(function (p, i) {
+      var li = el("li", null, p);
+      li.dataset.i = i;
+      ol.appendChild(li);
+    });
+  }
+
+  function firstIndexOfDecade(id) {
+    for (var i = 0; i < N; i++) if (EV[i].decade === id) return i;
+    return 0;
+  }
+
+  function buildDecades() {
+    var box = $("#decades");
+    D.DECADES.forEach(function (d) {
+      var b = el("button", "dec", d.label);
+      b.type = "button";
+      b.dataset.dec = d.id;
+      b.addEventListener("click", function () { stopPlay(); go(firstIndexOfDecade(d.id)); });
+      box.appendChild(b);
+    });
+  }
+
+  function buildTrack() {
+    track.style.setProperty("--n", N);
+    EV.forEach(function (e, i) {
+      var li = el("li");
+      var b = el("button", "marker");
+      b.type = "button";
+      b.dataset.i = i;
+      b.setAttribute("aria-label", e.label + ": " + e.title);
+      var dot = el("span", "mk-dot");
+      dot.style.setProperty("--c", e.accent);
+      var lab = el("span", "mk-label", e.label);
+      var tags = el("span", "mk-tags");
+      e.hl.forEach(function (h) { tags.appendChild(el("i", "mk-tag mk-" + h[0])); });
+      b.appendChild(dot);
+      b.appendChild(lab);
+      b.appendChild(tags);
+      b.addEventListener("click", function () { stopPlay(); go(i); });
+      li.appendChild(b);
+      track.appendChild(li);
+    });
+    slider.max = N - 1;
+    slider.addEventListener("input", function () { stopPlay(); go(+slider.value); });
+    $("#prev").addEventListener("click", function () { stopPlay(); go(cur - 1); });
+    $("#next").addEventListener("click", function () { stopPlay(); go(cur + 1); });
+    $("#play").addEventListener("click", togglePlay);
+  }
+
+  /* ---------- Linha do tempo: navegação ---------- */
+  function syncControls() {
+    var e = EV[cur];
+    slider.value = cur;
+    slider.setAttribute("aria-valuetext", e.label + ": " + e.title);
+    $("#prev").disabled = cur === 0;
+    $("#next").disabled = cur === N - 1;
+    tlSection.style.setProperty("--accent", e.accent);
+    track.style.setProperty("--i", cur);
+
+    var markers = track.querySelectorAll(".marker");
+    for (var i = 0; i < markers.length; i++) {
+      var on = i === cur;
+      markers[i].classList.toggle("is-on", on);
+      markers[i].classList.toggle("is-past", i < cur);
+      if (on) markers[i].setAttribute("aria-current", "step"); else markers[i].removeAttribute("aria-current");
+    }
+    var ph = $("#phases").children;
+    for (var p = 0; p < ph.length; p++) {
+      ph[p].classList.toggle("is-on", p === e.phase);
+      ph[p].classList.toggle("is-past", p < e.phase);
+      if (p === e.phase) ph[p].setAttribute("aria-current", "step"); else ph[p].removeAttribute("aria-current");
+    }
+    var dec = $("#decades").children;
+    for (var d = 0; d < dec.length; d++) {
+      var isOn = dec[d].dataset.dec === e.decade;
+      dec[d].classList.toggle("is-on", isOn);
+      dec[d].setAttribute("aria-pressed", isOn ? "true" : "false");
+    }
+    var m = track.children[cur];
+    var sc = $("#track-scroll");
+    var left = m.offsetLeft - (sc.clientWidth - m.offsetWidth) / 2;
+    if (sc.scrollTo) sc.scrollTo({ left: left, behavior: reduce ? "auto" : "smooth" }); else sc.scrollLeft = left;
+  }
+
+  function fill() {
+    var e = EV[cur];
+    $("#year").textContent = e.label;
+    var scene = $("#scene");
+    scene.innerHTML = SC.render(e.scene, { nodes: e.nodes });
+    scene.setAttribute("aria-label", e.alt);
+
+    $("#ev-phase").textContent = "Etapa: " + D.PHASES[e.phase];
+    $("#ev-title").textContent = e.title;
+    $("#ev-summary").textContent = e.summary;
+
+    var hl = $("#ev-hl");
+    hl.textContent = "";
+    hl.hidden = e.hl.length === 0;
+    e.hl.forEach(function (h) {
+      var li = el("li", "hl hl--" + h[0]);
+      li.appendChild(el("strong", null, D.HIGHLIGHTS[h[0]]));
+      li.appendChild(el("span", null, h[1]));
+      hl.appendChild(li);
+    });
+
+    var facts = $("#ev-facts");
+    facts.textContent = "";
+    $("#ev-facts-wrap").hidden = e.facts.length === 0;
+    e.facts.forEach(function (f, k) {
+      var b = el("button", "fact");
+      b.type = "button";
+      b.appendChild(el("span", null, f.t));
+      b.appendChild(el("i", "fact-plus"));
+      b.addEventListener("click", function () { openFact(cur, k, b); });
+      facts.appendChild(b);
+    });
+
+    fillSrcLine($("#ev-src"), e.src);
+    $("#ev-liga").hidden = !e.liga;
+    $("#live").textContent = "Período " + e.label + ": " + e.title;
+  }
+
+  function go(i) {
+    i = Math.max(0, Math.min(N - 1, i));
+    if (i === cur) return;
+    var first = cur === -1;
+    cur = i;
+    syncControls();
+    clearTimeout(swapTimer);
+    if (first || reduce) {
+      fill();
+    } else {
+      stage.classList.add("is-out");
+      swapTimer = setTimeout(function () {
+        fill();
+        stage.classList.remove("is-out");
+      }, 220);
+    }
+    try { history.replaceState(null, "", "#ano-" + EV[i].id); } catch (err) { /* ambientes sem history */ }
+  }
+
+  function jumpTo(id) {
+    var idx = -1;
+    for (var i = 0; i < N; i++) if (EV[i].id === id) idx = i;
+    if (idx < 0) return;
+    stopPlay();
+    go(idx);
+    tlSection.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
+    var t = $("#ev-title");
+    t.tabIndex = -1;
+    setTimeout(function () { t.focus({ preventScroll: true }); }, reduce ? 0 : 400);
+  }
+
+  /* ---------- Reprodução automática (iniciada pela pessoa) ---------- */
+  function stopPlay() {
+    if (playTimer) { clearInterval(playTimer); playTimer = null; }
+    var b = $("#play");
+    b.setAttribute("aria-pressed", "false");
+    b.textContent = "Percorrer sozinho";
+  }
+  function togglePlay() {
+    if (playTimer) { stopPlay(); return; }
+    var b = $("#play");
+    if (cur >= N - 1) go(0);
+    b.setAttribute("aria-pressed", "true");
+    b.textContent = "Pausar";
+    playTimer = setInterval(function () {
+      if (cur >= N - 1) { stopPlay(); return; }
+      go(cur + 1);
+    }, 7000);
+  }
+
+  /* ---------- Diálogo com informações adicionais ---------- */
+  var dlg = $("#dialog");
+  function openFact(ei, fi, opener) {
+    var e = EV[ei];
+    var f = e.facts[fi];
+    dlg.style.setProperty("--accent", e.accent);
+    $("#dlg-kicker").textContent = e.label + " · " + D.PHASES[e.phase];
+    $("#dlg-title").textContent = f.t;
+    var box = $("#dlg-text");
+    box.textContent = "";
+    box.appendChild(paragraphs(f.d));
+    var ul = $("#dlg-src");
+    ul.textContent = "";
+    f.src.forEach(function (n) {
+      var s = D.SOURCES[n - 1];
+      var li = el("li");
+      var a = el("a", null, "[" + n + "] " + s.t);
+      a.href = s.u;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      li.appendChild(a);
+      li.appendChild(el("span", "src-org", " " + s.o));
+      ul.appendChild(li);
+    });
+    if (typeof dlg.showModal === "function") dlg.showModal(); else dlg.setAttribute("open", "");
+    dlg._opener = opener;
+  }
+  function closeDialog() {
+    if (typeof dlg.close === "function") dlg.close(); else dlg.removeAttribute("open");
+    if (dlg._opener && dlg._opener.focus) dlg._opener.focus();
+  }
+  $("#dlg-close").addEventListener("click", closeDialog);
+  dlg.addEventListener("click", function (ev) { if (ev.target === dlg) closeDialog(); });
+
+  /* ---------- Destaques, estatísticas, atalhos ---------- */
+  function buildDestaques() {
+    var grid = $("#dest-grid");
+    D.DESTAQUES.forEach(function (d) {
+      var a = el("article", "dest");
+      a.appendChild(el("h3", null, d.k));
+      a.appendChild(el("p", null, d.t));
+      var s = el("p", "src-line");
+      fillSrcLine(s, d.src);
+      a.appendChild(s);
+      var b = el("button", "btn btn-ghost", "Ver na linha do tempo");
+      b.type = "button";
+      b.dataset.go = d.to;
+      a.appendChild(b);
+      grid.appendChild(a);
+    });
+  }
+
+  function buildStats() {
+    var ul = $("#stats");
+    D.STATS.forEach(function (s) {
+      var li = el("li");
+      li.appendChild(el("strong", null, s.n));
+      li.appendChild(el("span", null, s.l));
+      var p = el("span", "src-line");
+      fillSrcLine(p, s.src);
+      li.appendChild(p);
+      ul.appendChild(li);
+    });
+  }
+
+  document.addEventListener("click", function (ev) {
+    var t = ev.target.closest ? ev.target.closest("[data-go]") : null;
+    if (t) { ev.preventDefault(); jumpTo(t.dataset.go); }
+  });
+
+  /* ---------- Início ---------- */
+  buildSources();
+  buildPhases();
+  buildDecades();
+  buildTrack();
+  buildDestaques();
+  buildStats();
+
+  var lines = document.querySelectorAll("[data-src]");
+  for (var i = 0; i < lines.length; i++) {
+    fillSrcLine(lines[i], lines[i].getAttribute("data-src").split(",").map(Number));
+  }
+
+  var start = 0;
+  var m = /^#ano-(.+)$/.exec(location.hash || "");
+  if (m) for (var k = 0; k < N; k++) if (EV[k].id === m[1]) start = k;
+  go(start);
+})();
+
+</script>
+</body>
+</html>
